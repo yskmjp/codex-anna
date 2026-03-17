@@ -2,6 +2,9 @@
 
 `p5.js` を使ってダンススコア JSON を可視化する、静的ファイルのみの Web アプリです。複数ダンサーを棒人間としてステージ上に表示し、時間軸に沿って簡易モーションを再生します。ビルド不要で、ローカルでも GitHub Pages でもそのまま動きます。
 
+GitHub Pages 公開リンク:
+[https://yskmjp.github.io/codex-anna/](https://yskmjp.github.io/codex-anna/)
+
 ## アプリ概要
 
 - サンプル JSON を同梱
@@ -35,7 +38,7 @@
 
 ### 2. ローカルサーバーで起動
 
-`fetch()` で JSON を読むため、`index.html` を直接ダブルクリックするよりローカルサーバー経由がおすすめです。
+`fetch()` で JSON を読むため、`index.html` を直接開くよりローカルサーバー経由がおすすめです。
 
 Python がある場合:
 
@@ -83,11 +86,8 @@ GitHub のリポジトリ画面で以下を開きます。
 
 数十秒から数分後に公開 URL が発行されます。
 
-例:
-
-```text
-https://YOUR_NAME.github.io/YOUR_REPOSITORY/
-```
+このリポジトリの公開先:
+[https://yskmjp.github.io/codex-anna/](https://yskmjp.github.io/codex-anna/)
 
 このアプリは相対パスで構成しているため、GitHub Pages 配下でもそのまま動きます。
 
