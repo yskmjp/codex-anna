@@ -17,11 +17,26 @@ const ui = {
   timelineProgress: document.getElementById("timelineProgress"),
   timelineCursor: document.getElementById("timelineCursor"),
   scoreTitle: document.getElementById("scoreTitle"),
+  sampleSelect: document.getElementById("sampleSelect"),
 };
 
 let player = null;
 let p5Instance = null;
-let bundledSampleScore = null;
+const bundledSamples = new Map();
+const sampleCatalog = [
+  {
+    id: "depth",
+    label: "The Five Legged Stool",
+    path: "./data/sample-score.json",
+    embeddedId: "embeddedSampleScore",
+  },
+  {
+    id: "anton",
+    label: "アントン、猫、クリ",
+    path: "./data/test-patterns/anton-neko-kuri-opening.json",
+    embeddedId: "embeddedAntonScore",
+  },
+];
 
 initialize().catch((error) => {
   console.error("Failed to initialize app:", error);
@@ -31,8 +46,8 @@ initialize().catch((error) => {
 async function initialize() {
   bindUIEvents();
 
-  const rawScore = await loadInitialScore();
-  bundledSampleScore = rawScore;
+  populateSampleOptions();
+  const rawScore = await loadSampleById(ui.sampleSelect.value || sampleCatalog[0].id);
   syncEditorWithScore(rawScore);
   loadScoreIntoPlayer(rawScore);
   createSketch();
@@ -44,14 +59,8 @@ function bindUIEvents() {
   ui.stopButton.addEventListener("click", () => player?.stop());
   ui.resetButton.addEventListener("click", () => player?.reset());
   ui.applyJsonButton.addEventListener("click", applyEditorJson);
-  ui.restoreSampleButton.addEventListener("click", () => {
-    if (!bundledSampleScore) {
-      return;
-    }
-
-    syncEditorWithScore(bundledSampleScore);
-    loadScoreIntoPlayer(bundledSampleScore);
-  });
+  ui.restoreSampleButton.addEventListener("click", restoreSelectedSample);
+  ui.sampleSelect.addEventListener("change", handleSampleChange);
 }
 
 function applyEditorJson() {
@@ -64,23 +73,62 @@ function applyEditorJson() {
   }
 }
 
-async function loadInitialScore() {
+async function handleSampleChange() {
   try {
-    const response = await fetch("./data/sample-score.json");
+    const rawScore = await loadSampleById(ui.sampleSelect.value);
+    syncEditorWithScore(rawScore);
+    loadScoreIntoPlayer(rawScore);
+  } catch (error) {
+    console.error("Failed to switch sample:", error);
+    alert("Failed to load the selected sample.");
+  }
+}
+
+function restoreSelectedSample() {
+  const sampleId = ui.sampleSelect.value;
+  const rawScore = bundledSamples.get(sampleId);
+
+  if (!rawScore) {
+    return;
+  }
+
+  syncEditorWithScore(rawScore);
+  loadScoreIntoPlayer(rawScore);
+}
+
+function populateSampleOptions() {
+  ui.sampleSelect.innerHTML = sampleCatalog
+    .map((sample) => `<option value="${sample.id}">${sample.label}</option>`)
+    .join("");
+}
+
+async function loadSampleById(sampleId) {
+  if (bundledSamples.has(sampleId)) {
+    return bundledSamples.get(sampleId);
+  }
+
+  const sample = sampleCatalog.find((entry) => entry.id === sampleId) || sampleCatalog[0];
+
+  try {
+    const response = await fetch(sample.path);
     if (!response.ok) {
       throw new Error(`Could not load sample score: ${response.status}`);
     }
 
-    return await response.json();
+    const rawScore = await response.json();
+    bundledSamples.set(sample.id, rawScore);
+    return rawScore;
   } catch (error) {
     console.warn("Falling back to embedded sample score:", error);
-    const embeddedSample = document.getElementById("embeddedSampleScore");
+    const embeddedSample = document.getElementById(sample.embeddedId);
 
     if (!embeddedSample?.textContent) {
       throw error;
     }
 
-    return JSON.parse(embeddedSample.textContent);
+    const rawScore = JSON.parse(embeddedSample.textContent);
+    bundledSamples.set(sample.id, rawScore);
+    return rawScore;
   }
 }
 

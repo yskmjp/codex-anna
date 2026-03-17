@@ -13,6 +13,11 @@
         <h1>DANCE SCORE VISUALIZER</h1>
       </div>
       <div class="score-meta">
+        <label for="sampleSelect">Sample</label>
+        <select id="sampleSelect">
+          <option value="depth">The Five Legged Stool</option>
+          <option value="anton">アントン、猫、クリ</option>
+        </select>
         <span id="scoreTitle">Loading sample score...</span>
       </div>
     </header>
@@ -141,6 +146,97 @@
           { "t_start": 18, "t_end": 32, "eventType": "movement", "type": "walk", "direction": "left", "quality": "functional" },
           { "t_start": 52, "t_end": 68, "eventType": "movement", "type": "walk", "direction": "right", "quality": "functional" },
           { "t_start": 68, "t_end": 80, "eventType": "movement", "type": "walk", "direction": "left", "quality": "receding" }
+        ]
+      }
+    }
+  }
+}
+  </script>
+
+  <script id="embeddedAntonScore" type="application/json">
+{
+  "interpretation_note": {
+    "summary": "篠田千明『アントン、猫、クリ』冒頭部分を、状況から具体的な身体動作と意識の流れに沿う発話へ変換した。振付は日常行為をベースにしつつ、視線、重心、反復、停止、ねじれを加えてシンプルなコンテンポラリーダンス風の動きとして再構成した。",
+    "dominant_intent": "複数の主観が空間を横断し、目に入るものと言葉が身体の変化と同期する。",
+    "choreographer": "篠田千明",
+    "mode": "director-choreographer"
+  },
+  "assumptions": [
+    "時間はシートの流れをもとに 0-100 の抽象時間へ再配置した。",
+    "発話は説明文ではなく、視界・身体感覚・想起される名詞や短語の反復に置き換えた。",
+    "振付は日常行為をそのまま再現せず、重心移動、停止、視線、腕の軌道、胴体の傾きなどを加えて再構成した。",
+    "空欄の人物は基本的にイベントを持たないが、場面の群れ感を保つために最小限の待機質を与えた。",
+    "c がコンビニに入る場面では、a,b,d はそれぞれの視界や役割に応じて連続発話を行う構造を反映した。",
+    "主観が切り替わる箇所では quality を変えて前景化・後景化を表した。"
+  ],
+  "performance_json": {
+    "meta": {
+      "title": "アントン、猫、クリ - 冒頭（再構成版）",
+      "choreographer": "篠田千明",
+      "adaptation_mode": "interpretive_completion"
+    },
+    "time": {
+      "duration": 100,
+      "unit": "abstract"
+    },
+    "lanes": [
+      { "id": "a", "label": "A", "startX": 180 },
+      { "id": "b", "label": "B", "startX": 340 },
+      { "id": "c", "label": "C", "startX": 500 },
+      { "id": "d", "label": "D", "startX": 660 }
+    ],
+    "score": {
+      "a": {
+        "events": [
+          { "t_start": 0, "t_end": 40, "eventType": "movement", "type": "idle", "quality": "soft_waiting_with_small_head_turns" },
+          { "t_start": 40, "t_end": 50, "eventType": "movement", "type": "walk", "direction": "right", "quality": "small_steps_with_neck_leading_and_pauses" },
+          { "t_start": 40, "t_end": 50, "eventType": "speech", "text": "棚 棚 棚 ペットボトル ペットボトル おにぎり おにぎり パン パン レジ" },
+          { "t_start": 50, "t_end": 60, "eventType": "movement", "type": "turn", "quality": "one_arm_reaches_then_retracts_weight_shifts_forward" },
+          { "t_start": 50, "t_end": 60, "eventType": "speech", "text": "お茶 お茶 パック パック レジ レジ ドア ドア" },
+          { "t_start": 60, "t_end": 70, "eventType": "movement", "type": "walk", "direction": "left", "quality": "steps_lengthen_and_spine_softens_receding" },
+          { "t_start": 60, "t_end": 70, "eventType": "speech", "text": "電柱 電柱 角 角 住宅 住宅 塀 塀" },
+          { "t_start": 70, "t_end": 82, "eventType": "movement", "type": "walk", "direction": "left", "quality": "careful_catlike_footfall_with_low_reaches" },
+          { "t_start": 70, "t_end": 82, "eventType": "speech", "text": "猫 猫 しっぽ しっぽ 目 目 おーい おーい" },
+          { "t_start": 82, "t_end": 100, "eventType": "movement", "type": "walk", "direction": "left", "quality": "key_searching_hunched_then_opening_inside" },
+          { "t_start": 82, "t_end": 100, "eventType": "speech", "text": "階段 階段 鍵 鍵 ドア ドア 部屋 部屋 机 机" }
+        ]
+      },
+      "b": {
+        "events": [
+          { "t_start": 0, "t_end": 10, "eventType": "movement", "type": "idle", "quality": "rolling_up_from_sleep_with_heavy_head" },
+          { "t_start": 0, "t_end": 10, "eventType": "speech", "text": "天井 天井 カーテン カーテン 光 光 枕 枕" },
+          { "t_start": 10, "t_end": 40, "eventType": "movement", "type": "idle", "quality": "upright_but_loose_with_swaying_knees" },
+          { "t_start": 40, "t_end": 60, "eventType": "movement", "type": "stand", "quality": "clerk_posture_with_small_bows_and_hand_gestures" },
+          { "t_start": 40, "t_end": 60, "eventType": "speech", "text": "いらっしゃいませ いらっしゃいませ 袋 袋 レシート レシート ありがとうございます ありがとうございます" },
+          { "t_start": 60, "t_end": 100, "eventType": "movement", "type": "idle", "quality": "background_presence_with_minimal_head_tracking" }
+        ]
+      },
+      "c": {
+        "events": [
+          { "t_start": 0, "t_end": 20, "eventType": "movement", "type": "walk", "direction": "left", "quality": "easy_stride_with_swinging_arms_and_scanning_gaze" },
+          { "t_start": 0, "t_end": 20, "eventType": "speech", "text": "駅 駅 看板 看板 人 人 ビル ビル 光 光" },
+          { "t_start": 20, "t_end": 30, "eventType": "movement", "type": "walk", "direction": "left", "quality": "pelvis_tightens_steps_shorten_one_hand_to_lower_belly" },
+          { "t_start": 20, "t_end": 30, "eventType": "speech", "text": "尿意 尿意 膀胱 膀胱 まずい まずい コンビニ コンビニ" },
+          { "t_start": 30, "t_end": 42, "eventType": "movement", "type": "walk", "direction": "right", "quality": "quick_diagonal_steps_with_forward_lean_and_opening_arms" },
+          { "t_start": 30, "t_end": 42, "eventType": "speech", "text": "ドア ドア すいません すいません トイレ トイレ 通路 通路" },
+          { "t_start": 42, "t_end": 50, "eventType": "movement", "type": "sit", "quality": "drop_weight_down_then_small_release_in_spine" },
+          { "t_start": 42, "t_end": 50, "eventType": "speech", "text": "便器 便器 水 水 服 服 息 息" },
+          { "t_start": 50, "t_end": 60, "eventType": "movement", "type": "stand", "quality": "unfold_slowly_then_adjust_clothes_and_return_center" },
+          { "t_start": 50, "t_end": 60, "eventType": "speech", "text": "終わった 終わった 軽い 軽い 通路 通路 店 店" },
+          { "t_start": 60, "t_end": 100, "eventType": "movement", "type": "idle", "quality": "background_after_release_with_soft_breathing" }
+        ]
+      },
+      "d": {
+        "events": [
+          { "t_start": 0, "t_end": 10, "eventType": "movement", "type": "stand", "quality": "dressing_sequence_with_arm_threading_and_head_tilts" },
+          { "t_start": 0, "t_end": 10, "eventType": "speech", "text": "シャツ シャツ 袖 袖 髪 髪 鏡 鏡" },
+          { "t_start": 10, "t_end": 20, "eventType": "movement", "type": "walk", "direction": "right", "quality": "door_crossing_with_brief_pause_and_downward_drop" },
+          { "t_start": 10, "t_end": 20, "eventType": "speech", "text": "玄関 玄関 ドア ドア 階段 階段 外 外" },
+          { "t_start": 20, "t_end": 30, "eventType": "movement", "type": "walk", "direction": "right", "quality": "known_route_even_steps_with_slight_forward_pull" },
+          { "t_start": 20, "t_end": 30, "eventType": "speech", "text": "道 道 角 角 信号 信号 駅 駅" },
+          { "t_start": 30, "t_end": 50, "eventType": "movement", "type": "stand", "quality": "upright_receiving_information_with_small_head_snaps" },
+          { "t_start": 30, "t_end": 50, "eventType": "speech", "text": "BGM BGM キャンペーン キャンペーン 文字 文字 冷蔵庫 冷蔵庫" },
+          { "t_start": 50, "t_end": 100, "eventType": "movement", "type": "idle", "quality": "background_presence_with_micro_weight_shift" }
         ]
       }
     }
