@@ -68,14 +68,14 @@ class Dancer {
   }
 
   applyWalk(event, progress, duration, currentTime) {
-    const dir = event.direction === "left" ? -1 : 1;
-    this.direction = dir;
     const startX = Number.isFinite(event.anchorX) ? event.anchorX : this.initialX;
     const endX = Number.isFinite(event.endX) ? event.endX : startX;
+    const walkCycle = currentTime * 7.5;
+
     this.x = lerp(startX, endX, progress);
-    this.motionState.bounce = Math.abs(Math.sin(progress * Math.PI * 4)) * -7;
-    this.motionState.armSwing = Math.sin(progress * Math.PI * 6) * 0.85;
-    this.motionState.legSwing = Math.sin(progress * Math.PI * 6 + Math.PI) * 0.95;
+    this.motionState.bounce = Math.abs(Math.sin(walkCycle)) * -7;
+    this.motionState.armSwing = Math.sin(walkCycle) * 0.85;
+    this.motionState.legSwing = Math.sin(walkCycle + Math.PI) * 0.95;
     this.motionState.headTilt = Math.sin(currentTime * 3) * 0.03;
   }
 
