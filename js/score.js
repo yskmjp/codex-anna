@@ -6,10 +6,11 @@ function parseScore(rawData) {
     throw new Error("JSON root must be an object.");
   }
 
-  const meta = rawData.meta ?? {};
-  const time = rawData.time ?? {};
-  const lanes = Array.isArray(rawData.lanes) ? rawData.lanes : [];
-  const score = rawData.score ?? {};
+  const rootData = rawData.performance_json ?? rawData;
+  const meta = rootData.meta ?? {};
+  const time = rootData.time ?? {};
+  const lanes = Array.isArray(rootData.lanes) ? rootData.lanes : [];
+  const score = rootData.score ?? {};
 
   if (!lanes.length) {
     throw new Error("JSON must contain at least one lane.");
@@ -28,6 +29,7 @@ function parseScore(rawData) {
     return {
       id: lane.id,
       label: lane.label || lane.id,
+      startX: Number.isFinite(Number(lane.startX)) ? Number(lane.startX) : null,
       note: laneScore?.note || "",
       events: events
         .map((event, eventIndex) => normalizeEvent(event, lane.id, eventIndex, timeline))
@@ -42,6 +44,12 @@ function parseScore(rawData) {
       date: meta.date || "",
       source_note: meta.source_note || "",
       schema: rawData.schema || "dance_score",
+      adaptation_mode: meta.adaptation_mode || "",
+      interpretation_summary: rawData.interpretation_note?.summary || "",
+      interpretation_intent: rawData.interpretation_note?.dominant_intent || "",
+      interpretation_choreographer: rawData.interpretation_note?.choreographer || "",
+      source_url: rawData.source_url || rawData.source_link || "https://annahalprindigitalarchive.omeka.net/exhibits/show/san-francisco-dancers-workshop/item/312",
+      source_label: rawData.source_label || "Anna Halprin Digital Archive / The Five Legged Stool",
     },
     time: {
       duration: timeline.duration,
@@ -166,6 +174,14 @@ function normalizeEventType(sourceType, event) {
 }
 
 function normalizeMovementType(sourceType, event) {
+  if (event?.eventType === "speech") {
+    return "idle";
+  }
+
+  if (event?.eventType === "object") {
+    return event?.action === "carry" || event?.action === "enter" || event?.action === "reposition" ? "walk" : "idle";
+  }
+
   if (SUPPORTED_MOVEMENT_TYPES.has(sourceType)) {
     return sourceType;
   }
@@ -249,6 +265,10 @@ function getSpeechText(items) {
 }
 
 function getEventDescription(event) {
+  if (typeof event?.text === "string" && event.text) {
+    return event.text;
+  }
+
   if (typeof event?.description === "string" && event.description) {
     return event.description;
   }

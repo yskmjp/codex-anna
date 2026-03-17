@@ -27,7 +27,7 @@ class ScorePlayer {
     const spacing = this.stageWidth / (lanes.length + 1);
 
     return lanes.map((lane, index) => {
-      const startX = spacing * (index + 1);
+      const startX = Number.isFinite(lane.startX) ? lane.startX : spacing * (index + 1);
       return new Dancer({
         id: lane.id,
         label: lane.label,
@@ -111,6 +111,11 @@ class ScorePlayer {
     }
     if (this.scoreData.meta.date) {
       p.text(`Date: ${this.scoreData.meta.date}`, 48, 102);
+    }
+    if (this.scoreData.meta.interpretation_choreographer || this.scoreData.meta.source_label) {
+      p.textSize(12);
+      p.text(`Sample note: JSONized interpretation of Anna Halprin's score "The Five Legged Stool".`, 48, 124);
+      p.text(`Source: ${this.scoreData.meta.source_label}`, 48, 142);
     }
     p.pop();
   }

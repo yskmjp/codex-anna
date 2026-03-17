@@ -194,11 +194,12 @@ function createDefaultMotionState() {
 }
 
 function resolveSpeechText(event, currentTime) {
+  if (typeof event?.text === "string" && event.text) {
+    return event.text;
+  }
+
   if (Array.isArray(event?.items) && event.items.length) {
     const activeItem = event.items
-      .map((item) => ({ ...item, t: Number(item?.t) }))
-      .filter((item) => Number.isFinite(item.t) && typeof item.text === "string")
-      .sort((a, b) => a.t - b.t)
       .find((item, index, array) => {
         const nextTime = index < array.length - 1 ? array[index + 1].t : event.t_end;
         return currentTime >= item.t && currentTime < nextTime;

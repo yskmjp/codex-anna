@@ -14,6 +14,16 @@ GitHub Pages 公開リンク:
 - 複数ダンサーの同時再生
 - `idle` / `walk` / `jump` / `turn` / `sit` / `fall` を実装
 
+## 同梱サンプルについて
+
+同梱しているサンプル JSON は、Anna Halprin のスコア「The Five Legged Stool」をもとにした JSON 化および解釈的補完版です。
+
+参照元:
+[Anna Halprin Digital Archive / The Five Legged Stool](https://annahalprindigitalarchive.omeka.net/exhibits/show/san-francisco-dancers-workshop/item/312)
+
+注意:
+このサンプルは原資料の厳密な逐語転記ではなく、判読しづらい箇所を上演可能な movement / speech / object / relation の出来事として補った interpretive performance version を含みます。
+
 ## ディレクトリ構成
 
 ```text
