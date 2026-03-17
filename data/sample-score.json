@@ -2,7 +2,7 @@
   "source_url": "https://annahalprindigitalarchive.omeka.net/exhibits/show/san-francisco-dancers-workshop/item/312",
   "source_label": "Anna Halprin Digital Archive / The Five Legged Stool",
   "interpretation_note": {
-    "summary": "このスコアは、厳密なステップ記譜というより、複数人物の行為・位置・質感・発話が時間軸上で交差する上演スコアとして解釈した。読めない箇所は、アンナ・ハルプリンの task-based / open score 的な方法に沿って、日常動作・間・関係性の変化として補完した。",
+    "summary": "このスコアは、厳密なステップ記譜というより、複数人物の行為・位置・質感・発話が時間軸上で交差する上演スコアとして解釈した。読めない箇所は、アンナ・ハルプリンの task-based / open score 的な方法に沿って、日常動作・間・関係性の変化として補完した。終盤の一部は、明示的な退場記号ではなく、関係から離脱し舞台端へ向かう運動として再構成した。",
     "dominant_intent": "movement, speech, object, relation が同時進行する実験的パフォーマンス。意味の固定より、出来事の連鎖と知覚体験を優先。",
     "choreographer": "Anna Halprin",
     "mode": "director-choreographer"
@@ -15,7 +15,8 @@
     "YOUNG GIRL は全体を横断する漂遊的・観照的な存在として、ゆっくりした歩行と停止を中心に構成した。",
     "STAGE HAND は舞台上の物や椅子を動かす機能的存在として扱い、 object event を movement に隣接して置いた。",
     "quality は原譜の判読不能部分を、neutral / hesitant / agitated / abrupt / suspended などの上演可能な運動質に翻訳した。",
-    "duration は原画像の tick 0-95 をそのまま秒とはみなさず、上演しやすいよう 96 counts 相当の抽象時間として扱った。"
+    "duration は原画像の tick 0-95 をそのまま秒とはみなさず、上演しやすいよう 96 counts 相当の抽象時間として扱った。",
+    "明示的な exit 記号は確認できないため、終盤の一部は walk + direction + withdrawn/detached によって舞台端への離脱として補完した。"
   ],
   "source_json": {
     "meta": {
@@ -120,7 +121,7 @@
           { "t_start": 71, "t_end": 75, "eventType": "speech", "text": "PLEASE" },
           { "t_start": 75, "t_end": 79, "eventType": "speech", "text": "HELP" },
           { "t_start": 79, "t_end": 84, "eventType": "movement", "type": "fall", "quality": "released" },
-          { "t_start": 84, "t_end": 96, "eventType": "movement", "type": "idle", "quality": "aftershock" }
+          { "t_start": 84, "t_end": 96, "eventType": "movement", "type": "walk", "direction": "right", "quality": "withdrawn" }
         ]
       },
       "man1": {
@@ -133,7 +134,7 @@
           { "t_start": 50, "t_end": 62, "eventType": "movement", "type": "idle", "quality": "waiting" },
           { "t_start": 62, "t_end": 72, "eventType": "movement", "type": "walk", "direction": "left", "quality": "measured" },
           { "t_start": 72, "t_end": 84, "eventType": "movement", "type": "turn", "quality": "reactive" },
-          { "t_start": 84, "t_end": 96, "eventType": "movement", "type": "idle", "quality": "watching" }
+          { "t_start": 84, "t_end": 96, "eventType": "movement", "type": "walk", "direction": "left", "quality": "withdrawn" }
         ]
       },
       "man2": {
@@ -145,7 +146,7 @@
           { "t_start": 45, "t_end": 56, "eventType": "movement", "type": "idle", "quality": "suspended" },
           { "t_start": 56, "t_end": 66, "eventType": "movement", "type": "sit", "quality": "temporary" },
           { "t_start": 66, "t_end": 82, "eventType": "movement", "type": "walk", "direction": "left", "quality": "withdrawn" },
-          { "t_start": 82, "t_end": 96, "eventType": "movement", "type": "idle", "quality": "watching" }
+          { "t_start": 82, "t_end": 96, "eventType": "movement", "type": "walk", "direction": "left", "quality": "detached" }
         ]
       },
       "young_girl": {

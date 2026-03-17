@@ -1,22 +1,23 @@
 # Dance Score Player
 
-`p5.js` を使ってダンススコア JSON を可視化する、静的ファイルのみの Web アプリです。複数ダンサーを棒人間としてステージ上に表示し、時間軸に沿って簡易モーションを再生します。ビルド不要で、ローカルでも GitHub Pages でもそのまま動きます。
+`p5.js` を使ってダンススコア JSON を可視化する、静的ファイルだけの Web アプリです。複数ダンサーを棒人間としてステージ上に表示し、時間軸に沿って movement / speech / object を簡易再生します。
 
-GitHub Pages 公開リンク:
+GitHub Pages:
 [https://yskmjp.github.io/codex-anna/](https://yskmjp.github.io/codex-anna/)
 
 ## アプリ概要
 
 - サンプル JSON を同梱
-- JSON ファイルアップロードに対応
-- Play / Pause / Stop / Reset の再生制御
+- 画面上のエディタに JSON を貼り付けて再生
+- Play / Pause / Stop / Reset
 - 現在時刻、総時間、タイムライン表示
-- 複数ダンサーの同時再生
-- `idle` / `walk` / `jump` / `turn` / `sit` / `fall` を実装
+- 複数ダンサー同時再生
+- `idle` / `walk` / `jump` / `turn` / `sit` / `fall`
+- `speech` は吹き出し表示
 
-## 同梱サンプルについて
+## 同梱サンプル
 
-同梱しているサンプル JSON は、Anna Halprin のスコア「The Five Legged Stool」をもとにした JSON 化および解釈的補完版です。
+デフォルトのサンプル JSON は、Anna Halprin のスコア「The Five Legged Stool」をもとにした JSON 化・解釈的補完版です。
 
 参照元:
 [Anna Halprin Digital Archive / The Five Legged Stool](https://annahalprindigitalarchive.omeka.net/exhibits/show/san-francisco-dancers-workshop/item/312)
@@ -36,159 +37,51 @@ GitHub Pages 公開リンク:
 |   |-- score.js
 |   `-- dancer.js
 |-- data
-|   `-- sample-score.json
+|   |-- sample-score.json
+|   `-- test-patterns
+|       `-- anna-halprin-five-legged-stool-with-exit-completion.json
 `-- README.md
 ```
 
 ## ローカルでの使い方
 
-### 1. ファイルを配置
+### 1. そのまま開く
 
-このリポジトリをそのままローカルに置きます。
+このアプリは `file://` で `index.html` を直接開いても動くようにしてあります。
 
-### 2. ローカルサーバーで起動
+### 2. ローカルサーバーで開く
 
-`fetch()` で JSON を読むため、`index.html` を直接開くよりローカルサーバー経由がおすすめです。
-
-Python がある場合:
+もちろん簡易サーバーでも動きます。
 
 ```bash
 python -m http.server 8000
 ```
 
-その後、ブラウザで以下を開きます。
-
 ```text
 http://localhost:8000/
 ```
 
-### 3. 動作確認
+### 3. 使い方
 
-- 初期状態でサンプルスコアが読み込まれます
-- `Play` で再生開始
-- `Pause` で一時停止
-- `Stop` で停止して 0 秒に戻る
-- `Reset` でも 0 秒に戻る
-- `JSONファイル選択` で独自 JSON を読み込めます
+- 初期状態でサンプル JSON がエディタに入っています
+- `Apply JSON` でエディタ内容を再生に反映します
+- `Restore Sample` で同梱サンプルに戻します
+- `Play` / `Pause` / `Stop` / `Reset` で再生制御します
 
 ## GitHub Pages での公開手順
 
-### 1. GitHub に新規リポジトリを作成
+1. GitHub に push する
+2. リポジトリの `Settings` を開く
+3. `Pages` を開く
+4. `Deploy from a branch` を選ぶ
+5. `main` と `/(root)` を選んで保存する
 
-このファイル一式をそのまま push します。
-
-### 2. Pages を有効化
-
-GitHub のリポジトリ画面で以下を開きます。
-
-- `Settings`
-- `Pages`
-
-### 3. 公開ブランチを指定
-
-`Build and deployment` の `Source` で以下を選びます。
-
-- `Deploy from a branch`
-- Branch: `main`
-- Folder: `/ (root)`
-
-### 4. 公開 URL を確認
-
-数十秒から数分後に公開 URL が発行されます。
-
-このリポジトリの公開先:
+公開先:
 [https://yskmjp.github.io/codex-anna/](https://yskmjp.github.io/codex-anna/)
 
-このアプリは相対パスで構成しているため、GitHub Pages 配下でもそのまま動きます。
+## JSON フォーマット
 
-## JSON フォーマット説明
-
-基本フォーマットは以下です。
-
-```json
-{
-  "meta": {
-    "title": "Sample Dance Score"
-  },
-  "time": {
-    "duration": 20,
-    "unit": "seconds"
-  },
-  "lanes": [
-    { "id": "woman", "label": "WOMAN" },
-    { "id": "man1", "label": "MAN 1" }
-  ],
-  "score": {
-    "woman": {
-      "events": [
-        { "t_start": 0, "t_end": 4, "type": "walk", "direction": "right" },
-        { "t_start": 4, "t_end": 6, "type": "jump" }
-      ]
-    }
-  }
-}
-```
-
-### 各項目の意味
-
-- `meta.title`: スコア名
-- `time.duration`: 全体の再生時間
-- `time.unit`: 時間単位。今回は `seconds` を想定
-- `lanes`: ダンサー定義
-- `score.<laneId>.events`: 各ダンサーのイベント列
-
-### movement イベント
-
-今回実装している `movement` 系の `type` は以下です。
-
-- `idle`
-- `walk`
-- `jump`
-- `turn`
-- `sit`
-- `fall`
-
-`walk` では `direction` に `left` または `right` を指定できます。
-
-### 拡張しやすい構造
-
-将来的な拡張のため、イベントには `eventType` を持たせられる設計にしています。今回は `movement` のみ再生し、それ以外のイベントタイプは安全に無視されます。
-
-例:
-
-```json
-{ "t_start": 2, "t_end": 3, "eventType": "speech", "text": "hello" }
-```
-
-このようなデータを将来追加しても、`movement` レイヤーの処理を壊しにくい構成です。
-
-## 実装ファイルの役割
-
-- `index.html`: UI とスクリプト読み込み
-- `style.css`: レイアウトと見た目
-- `js/main.js`: 起動処理、UI イベント、JSON 読み込み
-- `js/player.js`: 再生状態管理、時間更新、ステージ描画
-- `js/score.js`: JSON パースとイベント解釈
-- `js/dancer.js`: 棒人間描画とモーション表現
-
-## 今後の拡張案
-
-- タイムラインのドラッグシーク
-- イベントブロックの可視化
-- `speech` / `object` / `sound` イベントの描画
-- ダンサーごとの色や衣装設定
-- カメラワークやズーム
-- モーション補間の改善
-- JSON スキーマ検証の強化
-- エラー表示 UI の追加
-
-## JSON 作成ガイド
-
-他の人が新しいスコア JSON を作るときの参考として、最低限ここを揃えるとこのプレイヤーで再生できます。
-
-### 1. シンプルな基本形
-
-最小構成は以下です。
+### 基本形
 
 ```json
 {
@@ -207,43 +100,31 @@ GitHub のリポジトリ画面で以下を開きます。
     "woman": {
       "events": [
         { "t_start": 0, "t_end": 8, "eventType": "movement", "type": "walk", "direction": "right" },
-        { "t_start": 8, "t_end": 12, "eventType": "movement", "type": "jump" },
-        { "t_start": 12, "t_end": 16, "eventType": "speech", "text": "HELLO" }
-      ]
-    },
-    "man1": {
-      "events": [
-        { "t_start": 0, "t_end": 16, "eventType": "movement", "type": "idle" }
+        { "t_start": 8, "t_end": 12, "eventType": "speech", "text": "HELLO" }
       ]
     }
   }
 }
 ```
 
-### 2. このアプリが主に使うキー
+### 主なキー
 
-- `meta.title`: 作品タイトル
+- `meta.title`: タイトル
 - `meta.choreographer`: 振付家名
-- `time.duration`: 再生全体の長さ
-- `time.unit`: `seconds` や `counts`
-- `lanes`: ダンサー一覧
-- `score.<laneId>.events`: 各ダンサーのイベント列
+- `time.duration`: 全体長
+- `time.unit`: `seconds` または `counts`
+- `lanes`: ダンサー定義
+- `score.<laneId>.events`: ダンサーごとのイベント列
 
-### 3. lane の書き方
+### lane
 
-- `id`: `score` 側のキーと一致させる
-- `label`: 画面表示名
-- `startX`: 任意。初期立ち位置を固定したいときに指定
+- `id`: `score` のキーと一致させます
+- `label`: 表示名です
+- `startX`: 任意。初期立ち位置を固定したいときに使います
 
-例:
+### movement event
 
-```json
-{ "id": "young_girl", "label": "YOUNG GIRL", "startX": 760 }
-```
-
-### 4. movement event の書き方
-
-現在の棒人間プレイヤーで意味が分かる motion は以下です。
+使える `type`:
 
 - `idle`
 - `walk`
@@ -252,35 +133,27 @@ GitHub のリポジトリ画面で以下を開きます。
 - `sit`
 - `fall`
 
-`walk` のときは `direction` に `left` または `right` を入れられます。
-
 例:
 
 ```json
-{ "t_start": 20, "t_end": 28, "eventType": "movement", "type": "walk", "direction": "left", "quality": "agitated" }
+{ "t_start": 20, "t_end": 28, "eventType": "movement", "type": "walk", "direction": "left" }
 ```
 
-### 5. speech event の書き方
-
-短い発話は以下のように書けます。
+### speech event
 
 ```json
 { "t_start": 55, "t_end": 58, "eventType": "speech", "text": "CHOP" }
 ```
 
-再生中は吹き出しとして表示されます。
-
-### 6. object event の書き方
-
-現時点では object は専用の物体描画まではしていませんが、移動を伴うイベントとして再生に載せられます。
+### object event
 
 ```json
 { "t_start": 28, "t_end": 34, "eventType": "object", "objectType": "chair", "action": "carry" }
 ```
 
-### 7. Halprin サンプルのような拡張形
+### performance_json ラップ形式
 
-このプレイヤーは、以下のように `performance_json` を持つラップ形式も読めます。
+原資料メモと再生データを分けたい場合は、以下のように `performance_json` を使えます。
 
 ```json
 {
@@ -301,11 +174,9 @@ GitHub のリポジトリ画面で以下を開きます。
 }
 ```
 
-この形にしておくと、原資料由来のメモや解釈ノートを上位に持ちながら、実際の再生用データは `performance_json` に分けて保持できます。
+### score_ticks 形式
 
-### 8. score_ticks 形式にも対応
-
-以下のように `time.duration` の代わりに `time.ticks` を持つ形式も受け付けます。
+`time.duration` の代わりに `time.ticks` も使えます。
 
 ```json
 {
@@ -316,18 +187,22 @@ GitHub のリポジトリ画面で以下を開きます。
 }
 ```
 
-この場合は最初の tick から最後の tick までを全体長として扱います。
+## テストパターン
 
-### 9. 作るときのコツ
+以下のテスト用 JSON を同梱しています。
 
-- まずは `movement` だけで全体の流れを作る
-- そのあと必要な箇所に `speech` を足す
-- `object` や `quality` は補助情報として少しずつ追加する
-- 不確かな箇所は `description` や `note` に判断理由を書いておく
-- 元資料の転写と再生用データを分けたい場合は `performance_json` を使う
+- `data/sample-score.json`
+  デフォルトで読み込まれるサンプル
+- `data/test-patterns/anna-halprin-five-legged-stool-with-exit-completion.json`
+  同内容の参照用テストパターン
 
-## 補足
+比較、コピー、回帰確認に使えます。
 
-- p5.js は CDN 読み込みです
-- ビルドツール不要です
-- すべて静的ファイルで動作します
+## 今後の改善ポイント
+
+- 物体の専用描画
+- quality の見た目反映
+- タイムラインシーク
+- イベントブロック表示
+- JSON バリデーション強化
+- README のサンプル追加
