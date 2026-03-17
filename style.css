@@ -78,6 +78,14 @@ h1 {
   overflow-x: auto;
 }
 
+.stage-timeline-panel {
+  margin-top: 12px;
+  padding: 12px 14px 4px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(248, 251, 255, 0.9);
+}
+
 .canvas-container canvas {
   display: block;
   max-width: 100%;
@@ -160,7 +168,6 @@ button:hover,
   display: flex;
   flex-wrap: wrap;
   gap: 18px;
-  margin-top: 18px;
   color: var(--muted);
 }
 

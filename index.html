@@ -20,6 +20,20 @@
     <main class="app-main">
       <section class="stage-panel">
         <div id="canvas-container" class="canvas-container"></div>
+        <div class="stage-timeline-panel">
+          <div class="timeline-meta">
+            <span>Current: <strong id="currentTime">0.00s</strong></span>
+            <span>Total: <strong id="totalTime">0.00s</strong></span>
+            <span>Status: <strong id="playbackStatus">Stopped</strong></span>
+          </div>
+
+          <div class="timeline-wrapper">
+            <div class="timeline-track">
+              <div id="timelineProgress" class="timeline-progress"></div>
+              <div id="timelineCursor" class="timeline-cursor"></div>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section class="control-panel">
@@ -35,19 +49,6 @@
         <div class="json-editor-panel">
           <label class="json-editor-label" for="jsonInput">Dance Score JSON</label>
           <textarea id="jsonInput" class="json-editor" spellcheck="false"></textarea>
-        </div>
-
-        <div class="timeline-meta">
-          <span>Current: <strong id="currentTime">0.00s</strong></span>
-          <span>Total: <strong id="totalTime">0.00s</strong></span>
-          <span>Status: <strong id="playbackStatus">Stopped</strong></span>
-        </div>
-
-        <div class="timeline-wrapper">
-          <div class="timeline-track">
-            <div id="timelineProgress" class="timeline-progress"></div>
-            <div id="timelineCursor" class="timeline-cursor"></div>
-          </div>
         </div>
 
         <p class="helper-text">

@@ -20,6 +20,7 @@ class Dancer {
     this.direction = 1;
     this.motionState = createDefaultMotionState();
     this.colors = PALETTE[colorIndex % PALETTE.length];
+    this.prepareTimelinePositions();
   }
 
   reset() {
@@ -35,6 +36,7 @@ class Dancer {
     this.motionState = createDefaultMotionState();
     this.motionState.speechText = resolveSpeechText(event, currentTime);
     this.motionState.annotation = event.description || "";
+    this.x = Number.isFinite(event.anchorX) ? event.anchorX : this.x;
 
     switch (event.type) {
       case "walk":
@@ -67,9 +69,10 @@ class Dancer {
 
   applyWalk(event, progress, duration, currentTime) {
     const dir = event.direction === "left" ? -1 : 1;
-    const distance = Math.max(45, duration * 22);
     this.direction = dir;
-    this.x = clamp(this.initialX + dir * distance * progress, this.minX, this.maxX);
+    const startX = Number.isFinite(event.anchorX) ? event.anchorX : this.initialX;
+    const endX = Number.isFinite(event.endX) ? event.endX : startX;
+    this.x = lerp(startX, endX, progress);
     this.motionState.bounce = Math.abs(Math.sin(progress * Math.PI * 4)) * -7;
     this.motionState.armSwing = Math.sin(progress * Math.PI * 6) * 0.85;
     this.motionState.legSwing = Math.sin(progress * Math.PI * 6 + Math.PI) * 0.95;
@@ -153,6 +156,23 @@ class Dancer {
       drawSpeechBubble(p, this.x, headOffset + hipY - 44, state.speechText, this.colors.body);
     }
   }
+
+  prepareTimelinePositions() {
+    let currentX = clamp(this.initialX, this.minX, this.maxX);
+
+    this.lane.events.forEach((event) => {
+      event.anchorX = currentX;
+
+      if (event.type === "walk" || shouldMoveForObjectEvent(event)) {
+        const dir = event.direction === "left" ? -1 : 1;
+        const duration = Math.max(event.t_end - event.t_start, 0.0001);
+        const distance = Math.max(45, duration * 22);
+        currentX = clamp(currentX + dir * distance, this.minX, this.maxX);
+      }
+
+      event.endX = currentX;
+    });
+  }
 }
 
 function drawLimb(p, startX, startY, length, angle, strokeColor) {
@@ -234,6 +254,14 @@ function drawSpeechBubble(p, x, y, text, strokeColor) {
 
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
+}
+
+function lerp(start, end, amount) {
+  return start + (end - start) * amount;
+}
+
+function shouldMoveForObjectEvent(event) {
+  return event.eventType === "object" && ["carry", "enter", "reposition"].includes(event.action);
 }
 
 window.DanceScoreApp = window.DanceScoreApp || {};
