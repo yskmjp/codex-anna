@@ -183,14 +183,19 @@ class ScorePlayer {
   }
 
   resolveDancerOverlap() {
-    const sorted = [...this.dancers].sort((left, right) => left.x - right.x);
+    const sorted = [...this.dancers]
+      .sort((left, right) => left.initialX - right.initialX)
+      .map((dancer) => ({
+        dancer,
+        x: dancer.x,
+      }));
     const minGap = 70;
     const depthThreshold = 0.18;
 
     for (let index = 1; index < sorted.length; index += 1) {
       const previous = sorted[index - 1];
       const current = sorted[index];
-      const depthDifference = Math.abs(previous.motionState.depth - current.motionState.depth);
+      const depthDifference = Math.abs(previous.dancer.motionState.depth - current.dancer.motionState.depth);
       const gap = current.x - previous.x;
 
       if (depthDifference >= depthThreshold || gap >= minGap) {
@@ -198,8 +203,33 @@ class ScorePlayer {
       }
 
       const correction = (minGap - gap) / 2;
-      previous.x = Math.max(previous.minX, previous.x - correction);
-      current.x = Math.min(current.maxX, current.x + correction);
+      previous.x = Math.max(previous.dancer.minX, previous.x - correction);
+      current.x = Math.min(current.dancer.maxX, current.x + correction);
+    }
+
+    for (let index = 1; index < sorted.length; index += 1) {
+      const previous = sorted[index - 1];
+      const current = sorted[index];
+      current.x = Math.max(current.x, previous.x + 12);
+    }
+
+    for (let index = sorted.length - 2; index >= 0; index -= 1) {
+      const current = sorted[index];
+      const next = sorted[index + 1];
+      current.x = Math.min(current.x, next.x - 12);
+    }
+
+    sorted.forEach((entry) => {
+      entry.dancer.x = Math.min(Math.max(entry.x, entry.dancer.minX), entry.dancer.maxX);
+    });
+
+    for (let index = 1; index < sorted.length; index += 1) {
+      const previous = sorted[index - 1].dancer;
+      const current = sorted[index].dancer;
+
+      if (current.x <= previous.x) {
+        current.x = Math.min(current.maxX, previous.x + 12);
+      }
     }
   }
 
