@@ -21,11 +21,11 @@
       "unit": "counts"
     },
     "lanes": [
-      { "id": "woman", "label": "WOMAN", "startX": 180 },
-      { "id": "man1", "label": "MAN 1", "startX": 360 },
+      { "id": "woman", "label": "WOMAN", "startX": 320 },
+      { "id": "man1", "label": "MAN 1", "startX": 430 },
       { "id": "man2", "label": "MAN 2", "startX": 540 },
-      { "id": "young_girl", "label": "YOUNG GIRL", "startX": 760 },
-      { "id": "stage_hand", "label": "STAGE HAND", "startX": 900 }
+      { "id": "young_girl", "label": "YOUNG GIRL", "startX": 650 },
+      { "id": "stage_hand", "label": "STAGE HAND", "startX": 760 }
     ],
     "score": {
       "woman": {
