@@ -144,7 +144,7 @@ class Dancer {
     p.fill(49, 65, 88);
     p.textAlign(p.CENTER, p.CENTER);
     p.textSize(15);
-    p.text(this.label, this.x, this.baseY + 28);
+    p.text(this.label, this.x, this.baseY + 14);
     p.pop();
 
     if (state.speechText) {
