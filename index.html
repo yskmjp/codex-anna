@@ -29,7 +29,7 @@
           <button id="pauseButton" type="button">Pause</button>
           <button id="stopButton" type="button">Stop</button>
           <button id="resetButton" type="button">Reset</button>
-          <label class="file-input-label" for="jsonFileInput">JSONファイル選択</label>
+          <label class="file-input-label" for="jsonFileInput">Load JSON File</label>
           <input id="jsonFileInput" type="file" accept=".json,application/json">
         </div>
 
@@ -47,11 +47,59 @@
         </div>
 
         <p class="helper-text">
-          サンプルJSONは最初から読み込まれています。独自のJSONを読み込む場合はファイル選択を使ってください。
+          The bundled sample score loads automatically. You can also select your own JSON file.
         </p>
       </section>
     </main>
   </div>
+
+  <script id="embeddedSampleScore" type="application/json">
+    {
+      "meta": {
+        "title": "Sample Dance Score"
+      },
+      "time": {
+        "duration": 20,
+        "unit": "seconds"
+      },
+      "lanes": [
+        { "id": "woman", "label": "WOMAN" },
+        { "id": "man1", "label": "MAN 1" },
+        { "id": "man2", "label": "MAN 2" }
+      ],
+      "score": {
+        "woman": {
+          "events": [
+            { "t_start": 0, "t_end": 4, "type": "walk", "direction": "right" },
+            { "t_start": 4, "t_end": 6, "type": "jump" },
+            { "t_start": 6, "t_end": 9, "type": "idle" },
+            { "t_start": 9, "t_end": 12, "type": "turn" },
+            { "t_start": 12, "t_end": 16, "type": "walk", "direction": "left" },
+            { "t_start": 16, "t_end": 20, "type": "idle" }
+          ]
+        },
+        "man1": {
+          "events": [
+            { "t_start": 0, "t_end": 5, "type": "idle" },
+            { "t_start": 5, "t_end": 8, "type": "sit" },
+            { "t_start": 8, "t_end": 12, "type": "walk", "direction": "right" },
+            { "t_start": 12, "t_end": 14, "type": "jump" },
+            { "t_start": 14, "t_end": 18, "type": "fall" },
+            { "t_start": 18, "t_end": 20, "type": "idle" }
+          ]
+        },
+        "man2": {
+          "events": [
+            { "t_start": 0, "t_end": 3, "type": "walk", "direction": "left" },
+            { "t_start": 3, "t_end": 7, "type": "idle" },
+            { "t_start": 7, "t_end": 11, "type": "turn" },
+            { "t_start": 11, "t_end": 15, "type": "walk", "direction": "right" },
+            { "t_start": 15, "t_end": 20, "type": "idle" }
+          ]
+        }
+      }
+    }
+  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/p5@1.11.3/lib/p5.min.js"></script>
   <script type="module" src="./js/main.js"></script>

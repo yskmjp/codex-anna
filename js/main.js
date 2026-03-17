@@ -30,12 +30,7 @@ initialize().catch((error) => {
 async function initialize() {
   bindUIEvents();
 
-  const response = await fetch("./data/sample-score.json");
-  if (!response.ok) {
-    throw new Error(`Could not load sample score: ${response.status}`);
-  }
-
-  const rawScore = await response.json();
+  const rawScore = await loadInitialScore();
   loadScoreIntoPlayer(rawScore);
   createSketch();
 }
@@ -62,6 +57,26 @@ function bindUIEvents() {
       alert("Failed to load JSON. Please check the file format.");
     }
   });
+}
+
+async function loadInitialScore() {
+  try {
+    const response = await fetch("./data/sample-score.json");
+    if (!response.ok) {
+      throw new Error(`Could not load sample score: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.warn("Falling back to embedded sample score:", error);
+    const embeddedSample = document.getElementById("embeddedSampleScore");
+
+    if (!embeddedSample?.textContent) {
+      throw error;
+    }
+
+    return JSON.parse(embeddedSample.textContent);
+  }
 }
 
 function loadScoreIntoPlayer(rawScore) {
