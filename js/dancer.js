@@ -31,6 +31,8 @@ class Dancer {
     const duration = Math.max(event.t_end - event.t_start, 0.0001);
 
     this.motionState = createDefaultMotionState();
+    this.motionState.speechText = resolveSpeechText(event, currentTime);
+    this.motionState.annotation = event.description || "";
 
     switch (event.type) {
       case "walk":
@@ -144,6 +146,10 @@ class Dancer {
     p.textSize(15);
     p.text(this.label, this.x, this.baseY + 28);
     p.pop();
+
+    if (state.speechText) {
+      drawSpeechBubble(p, this.x, headOffset + hipY - 44, state.speechText, this.colors.body);
+    }
   }
 }
 
@@ -182,7 +188,45 @@ function createDefaultMotionState() {
     hipDrop: 0,
     kneeBend: 0.25,
     scaleX: 1,
+    speechText: "",
+    annotation: "",
   };
+}
+
+function resolveSpeechText(event, currentTime) {
+  if (Array.isArray(event?.items) && event.items.length) {
+    const activeItem = event.items
+      .map((item) => ({ ...item, t: Number(item?.t) }))
+      .filter((item) => Number.isFinite(item.t) && typeof item.text === "string")
+      .sort((a, b) => a.t - b.t)
+      .find((item, index, array) => {
+        const nextTime = index < array.length - 1 ? array[index + 1].t : event.t_end;
+        return currentTime >= item.t && currentTime < nextTime;
+      });
+
+    return activeItem?.text || event.speechText || "";
+  }
+
+  return event?.speechText || "";
+}
+
+function drawSpeechBubble(p, x, y, text, strokeColor) {
+  p.push();
+  p.textSize(13);
+  p.textAlign(p.CENTER, p.CENTER);
+  const bubbleWidth = Math.max(56, p.textWidth(text) + 24);
+  const bubbleHeight = 32;
+
+  p.fill(255, 255, 255, 235);
+  p.stroke(strokeColor);
+  p.strokeWeight(2);
+  p.rect(x - bubbleWidth / 2, y - bubbleHeight / 2, bubbleWidth, bubbleHeight, 14);
+  p.triangle(x - 6, y + bubbleHeight / 2 - 1, x + 6, y + bubbleHeight / 2 - 1, x, y + bubbleHeight / 2 + 10);
+
+  p.noStroke();
+  p.fill(31, 42, 55);
+  p.text(text, x, y);
+  p.pop();
 }
 
 window.DanceScoreApp = window.DanceScoreApp || {};

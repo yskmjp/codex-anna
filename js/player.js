@@ -106,6 +106,12 @@ class ScorePlayer {
     p.textSize(14);
     p.text(`Title: ${this.scoreData.meta.title}`, 48, 42);
     p.text(`Duration: ${this.scoreData.time.duration.toFixed(2)} ${this.scoreData.time.unit}`, 48, 62);
+    if (this.scoreData.meta.choreographer) {
+      p.text(`Choreographer: ${this.scoreData.meta.choreographer}`, 48, 82);
+    }
+    if (this.scoreData.meta.date) {
+      p.text(`Date: ${this.scoreData.meta.date}`, 48, 102);
+    }
     p.pop();
   }
 
