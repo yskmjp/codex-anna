@@ -18,6 +18,7 @@ class Dancer {
     this.maxX = maxX;
     this.x = initialX;
     this.direction = 1;
+    this.depth = 0.58;
     this.motionState = createDefaultMotionState();
     this.colors = PALETTE[colorIndex % PALETTE.length];
     this.prepareTimelinePositions();
@@ -36,6 +37,7 @@ class Dancer {
     this.motionState = createDefaultMotionState();
     this.motionState.speechText = resolveSpeechText(event, currentTime);
     this.motionState.annotation = event.description || "";
+    this.motionState.depth = resolveDepth(event, progress, currentTime);
     this.x = Number.isFinite(event.anchorX) ? event.anchorX : this.x;
 
     switch (event.type) {
@@ -113,13 +115,14 @@ class Dancer {
 
   draw(p) {
     const state = this.motionState;
-    const bodyHeight = 82 * state.bodyHeightScale;
-    const hipY = this.baseY - 34 + state.bounce - state.jumpLift + state.hipDrop * 0.2;
+    const stageScale = mapDepthToScale(state.depth);
+    const bodyHeight = 82 * state.bodyHeightScale * stageScale;
+    const hipY = mapDepthToY(this.baseY, state.depth) - 34 + state.bounce - state.jumpLift + state.hipDrop * 0.2;
     const torsoTopOffset = -bodyHeight;
     const shoulderOffset = torsoTopOffset + 18;
     const headOffset = torsoTopOffset - 22;
-    const armLength = 34;
-    const legLength = 42;
+    const armLength = 34 * stageScale;
+    const legLength = 42 * stageScale;
 
     p.push();
     p.translate(this.x, hipY);
@@ -209,6 +212,7 @@ function createDefaultMotionState() {
     hipDrop: 0,
     kneeBend: 0.25,
     scaleX: 1,
+    depth: 0.58,
     speechText: "",
     annotation: "",
   };
@@ -261,6 +265,36 @@ function lerp(start, end, amount) {
 
 function shouldMoveForObjectEvent(event) {
   return event.eventType === "object" && ["carry", "enter", "reposition"].includes(event.action);
+}
+
+function resolveDepth(event, progress, currentTime) {
+  const quality = `${event?.quality || ""}`.toLowerCase();
+
+  if (quality.includes("approaching")) {
+    return lerp(0.58, 0.88, progress);
+  }
+
+  if (quality.includes("receding")) {
+    return lerp(0.58, 0.28, progress);
+  }
+
+  if (quality.includes("floating")) {
+    return 0.5 + Math.sin(currentTime * 1.2) * 0.05;
+  }
+
+  if (event.eventType === "speech") {
+    return 0.82;
+  }
+
+  return 0.58;
+}
+
+function mapDepthToScale(depth) {
+  return lerp(0.72, 1.12, clamp(depth, 0, 1));
+}
+
+function mapDepthToY(baseY, depth) {
+  return lerp(baseY - 92, baseY + 8, clamp(depth, 0, 1));
 }
 
 window.DanceScoreApp = window.DanceScoreApp || {};

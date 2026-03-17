@@ -129,6 +129,28 @@ class ScorePlayer {
       const activeEvent = getActiveMovementEvent(dancer.lane, this.currentTime);
       dancer.updateFromEvent(activeEvent, this.currentTime);
     });
+    this.resolveDancerOverlap();
+  }
+
+  resolveDancerOverlap() {
+    const sorted = [...this.dancers].sort((left, right) => left.x - right.x);
+    const minGap = 70;
+    const depthThreshold = 0.18;
+
+    for (let index = 1; index < sorted.length; index += 1) {
+      const previous = sorted[index - 1];
+      const current = sorted[index];
+      const depthDifference = Math.abs(previous.motionState.depth - current.motionState.depth);
+      const gap = current.x - previous.x;
+
+      if (depthDifference >= depthThreshold || gap >= minGap) {
+        continue;
+      }
+
+      const correction = (minGap - gap) / 2;
+      previous.x = Math.max(previous.minX, previous.x - correction);
+      current.x = Math.min(current.maxX, current.x + correction);
+    }
   }
 
   resetDancers() {

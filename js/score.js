@@ -105,6 +105,7 @@ function normalizeEvent(event, laneId, eventIndex, timeline) {
     direction: normalizeDirection(event),
     eventType,
     description: getEventDescription(event),
+    quality: typeof event?.quality === "string" ? event.quality : "",
     speechText,
     items: normalizedItems,
     certainty: event?.certainty || "",
