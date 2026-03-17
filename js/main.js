@@ -8,7 +8,9 @@ const ui = {
   pauseButton: document.getElementById("pauseButton"),
   stopButton: document.getElementById("stopButton"),
   resetButton: document.getElementById("resetButton"),
-  jsonFileInput: document.getElementById("jsonFileInput"),
+  applyJsonButton: document.getElementById("applyJsonButton"),
+  restoreSampleButton: document.getElementById("restoreSampleButton"),
+  jsonInput: document.getElementById("jsonInput"),
   currentTime: document.getElementById("currentTime"),
   totalTime: document.getElementById("totalTime"),
   playbackStatus: document.getElementById("playbackStatus"),
@@ -19,6 +21,7 @@ const ui = {
 
 let player = null;
 let p5Instance = null;
+let bundledSampleScore = null;
 
 initialize().catch((error) => {
   console.error("Failed to initialize app:", error);
@@ -29,6 +32,8 @@ async function initialize() {
   bindUIEvents();
 
   const rawScore = await loadInitialScore();
+  bundledSampleScore = rawScore;
+  syncEditorWithScore(rawScore);
   loadScoreIntoPlayer(rawScore);
   createSketch();
 }
@@ -38,23 +43,25 @@ function bindUIEvents() {
   ui.pauseButton.addEventListener("click", () => player?.pause());
   ui.stopButton.addEventListener("click", () => player?.stop());
   ui.resetButton.addEventListener("click", () => player?.reset());
-
-  ui.jsonFileInput.addEventListener("change", async (event) => {
-    const file = event.target.files?.[0];
-    if (!file) {
+  ui.applyJsonButton.addEventListener("click", applyEditorJson);
+  ui.restoreSampleButton.addEventListener("click", () => {
+    if (!bundledSampleScore) {
       return;
     }
 
-    try {
-      const rawText = await file.text();
-      const rawScore = JSON.parse(rawText);
-      loadScoreIntoPlayer(rawScore);
-      event.target.value = "";
-    } catch (error) {
-      console.error("Failed to load selected JSON file:", error);
-      alert("Failed to load JSON. Please check the file format.");
-    }
+    syncEditorWithScore(bundledSampleScore);
+    loadScoreIntoPlayer(bundledSampleScore);
   });
+}
+
+function applyEditorJson() {
+  try {
+    const rawScore = JSON.parse(ui.jsonInput.value);
+    loadScoreIntoPlayer(rawScore);
+  } catch (error) {
+    console.error("Failed to parse JSON from editor:", error);
+    alert("Failed to parse JSON. Please check the text in the editor.");
+  }
 }
 
 async function loadInitialScore() {
@@ -93,6 +100,10 @@ function loadScoreIntoPlayer(rawScore) {
   ui.scoreTitle.textContent = parsedScore.meta.title;
   ui.totalTime.textContent = `${parsedScore.time.duration.toFixed(2)}s`;
   updateUI();
+}
+
+function syncEditorWithScore(rawScore) {
+  ui.jsonInput.value = JSON.stringify(rawScore, null, 2);
 }
 
 function createSketch() {

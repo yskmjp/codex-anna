@@ -104,7 +104,7 @@ h1 {
 }
 
 button,
-.file-input-label {
+.json-editor-label {
   border: 1px solid var(--line);
   border-radius: 999px;
   background: #fff;
@@ -117,7 +117,7 @@ button,
 }
 
 button:hover,
-.file-input-label:hover {
+.json-editor-label:hover {
   transform: translateY(-1px);
   border-color: var(--accent);
   background: var(--accent-soft);
@@ -134,8 +134,34 @@ button:hover,
   color: var(--danger);
 }
 
-#jsonFileInput {
-  display: none;
+.json-editor-panel {
+  margin-top: 16px;
+}
+
+.json-editor-label {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: default;
+  transform: none;
+}
+
+.json-editor {
+  width: 100%;
+  min-height: 220px;
+  resize: vertical;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #f8fbff;
+  color: var(--text);
+  font: 0.92rem/1.5 Consolas, "Courier New", monospace;
+  box-shadow: inset 0 1px 2px rgba(31, 42, 55, 0.04);
+}
+
+.json-editor:focus {
+  outline: 2px solid rgba(28, 109, 208, 0.2);
+  border-color: var(--accent);
 }
 
 .timeline-meta {

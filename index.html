@@ -29,8 +29,13 @@
           <button id="pauseButton" type="button">Pause</button>
           <button id="stopButton" type="button">Stop</button>
           <button id="resetButton" type="button">Reset</button>
-          <label class="file-input-label" for="jsonFileInput">Load JSON File</label>
-          <input id="jsonFileInput" type="file" accept=".json,application/json">
+          <button id="applyJsonButton" type="button">Apply JSON</button>
+          <button id="restoreSampleButton" type="button">Restore Sample</button>
+        </div>
+
+        <div class="json-editor-panel">
+          <label class="json-editor-label" for="jsonInput">Dance Score JSON</label>
+          <textarea id="jsonInput" class="json-editor" spellcheck="false"></textarea>
         </div>
 
         <div class="timeline-meta">
@@ -47,7 +52,7 @@
         </div>
 
         <p class="helper-text">
-          The bundled sample score loads automatically. You can also select your own JSON file.
+          Paste JSON into the editor and press Apply JSON. Restore Sample puts the bundled score back into the editor.
         </p>
       </section>
     </main>
