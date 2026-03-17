@@ -91,18 +91,68 @@ class ScorePlayer {
   }
 
   drawStage(p) {
+    const stageFrontLeft = 48;
+    const stageFrontRight = this.stageWidth - 48;
+    const stageBackLeft = 188;
+    const stageBackRight = this.stageWidth - 188;
+    const stageBackY = this.floorY - 156;
+
     p.push();
     p.noStroke();
     p.background(248, 251, 255);
     p.fill(234, 241, 250);
     p.rect(24, 24, this.stageWidth - 48, this.stageHeight - 48, 24);
 
+    p.fill(214, 225, 242);
+    p.quad(
+      stageFrontLeft,
+      this.floorY,
+      stageFrontRight,
+      this.floorY,
+      stageBackRight,
+      stageBackY,
+      stageBackLeft,
+      stageBackY
+    );
+
     p.fill(198, 210, 228);
     p.rect(48, this.floorY + 10, this.stageWidth - 96, 46, 18);
 
     p.stroke(133, 153, 180);
     p.strokeWeight(2);
-    p.line(48, this.floorY, this.stageWidth - 48, this.floorY);
+    p.noFill();
+    p.quad(
+      stageFrontLeft,
+      this.floorY,
+      stageFrontRight,
+      this.floorY,
+      stageBackRight,
+      stageBackY,
+      stageBackLeft,
+      stageBackY
+    );
+    p.line(stageFrontLeft, this.floorY, stageBackLeft, stageBackY);
+    p.line(stageFrontRight, this.floorY, stageBackRight, stageBackY);
+    p.line(stageBackLeft, stageBackY, stageBackRight, stageBackY);
+
+    p.strokeWeight(1.2);
+    p.stroke(160, 177, 200, 170);
+    for (let index = 1; index <= 4; index += 1) {
+      const amount = index / 5;
+      const nearLeftX = p.lerp(stageFrontLeft, stageFrontRight, amount);
+      const nearRightX = nearLeftX;
+      const farLeftX = p.lerp(stageBackLeft, stageBackRight, amount);
+      const farRightX = farLeftX;
+      p.line(nearLeftX, this.floorY, farLeftX, stageBackY);
+    }
+
+    for (let index = 1; index <= 3; index += 1) {
+      const amount = index / 4;
+      const leftX = p.lerp(stageFrontLeft, stageBackLeft, amount);
+      const rightX = p.lerp(stageFrontRight, stageBackRight, amount);
+      const y = p.lerp(this.floorY, stageBackY, amount);
+      p.line(leftX, y, rightX, y);
+    }
 
     p.noStroke();
     p.fill(90, 108, 132);
