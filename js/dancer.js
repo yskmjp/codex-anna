@@ -113,7 +113,6 @@ class Dancer {
 
   draw(p) {
     const state = this.motionState;
-    const scaleX = this.direction * state.scaleX;
     const bodyHeight = 82 * state.bodyHeightScale;
     const hipY = this.baseY - 34 + state.bounce - state.jumpLift + state.hipDrop * 0.2;
     const torsoTopOffset = -bodyHeight;
@@ -124,7 +123,7 @@ class Dancer {
 
     p.push();
     p.translate(this.x, hipY);
-    p.scale(scaleX, 1);
+    p.scale(state.scaleX, 1);
     p.rotate(state.bodyRotation);
 
     p.stroke(this.colors.body);
