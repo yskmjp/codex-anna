@@ -182,6 +182,150 @@ GitHub のリポジトリ画面で以下を開きます。
 - JSON スキーマ検証の強化
 - エラー表示 UI の追加
 
+## JSON 作成ガイド
+
+他の人が新しいスコア JSON を作るときの参考として、最低限ここを揃えるとこのプレイヤーで再生できます。
+
+### 1. シンプルな基本形
+
+最小構成は以下です。
+
+```json
+{
+  "meta": {
+    "title": "My Score"
+  },
+  "time": {
+    "duration": 32,
+    "unit": "counts"
+  },
+  "lanes": [
+    { "id": "woman", "label": "WOMAN" },
+    { "id": "man1", "label": "MAN 1" }
+  ],
+  "score": {
+    "woman": {
+      "events": [
+        { "t_start": 0, "t_end": 8, "eventType": "movement", "type": "walk", "direction": "right" },
+        { "t_start": 8, "t_end": 12, "eventType": "movement", "type": "jump" },
+        { "t_start": 12, "t_end": 16, "eventType": "speech", "text": "HELLO" }
+      ]
+    },
+    "man1": {
+      "events": [
+        { "t_start": 0, "t_end": 16, "eventType": "movement", "type": "idle" }
+      ]
+    }
+  }
+}
+```
+
+### 2. このアプリが主に使うキー
+
+- `meta.title`: 作品タイトル
+- `meta.choreographer`: 振付家名
+- `time.duration`: 再生全体の長さ
+- `time.unit`: `seconds` や `counts`
+- `lanes`: ダンサー一覧
+- `score.<laneId>.events`: 各ダンサーのイベント列
+
+### 3. lane の書き方
+
+- `id`: `score` 側のキーと一致させる
+- `label`: 画面表示名
+- `startX`: 任意。初期立ち位置を固定したいときに指定
+
+例:
+
+```json
+{ "id": "young_girl", "label": "YOUNG GIRL", "startX": 760 }
+```
+
+### 4. movement event の書き方
+
+現在の棒人間プレイヤーで意味が分かる motion は以下です。
+
+- `idle`
+- `walk`
+- `jump`
+- `turn`
+- `sit`
+- `fall`
+
+`walk` のときは `direction` に `left` または `right` を入れられます。
+
+例:
+
+```json
+{ "t_start": 20, "t_end": 28, "eventType": "movement", "type": "walk", "direction": "left", "quality": "agitated" }
+```
+
+### 5. speech event の書き方
+
+短い発話は以下のように書けます。
+
+```json
+{ "t_start": 55, "t_end": 58, "eventType": "speech", "text": "CHOP" }
+```
+
+再生中は吹き出しとして表示されます。
+
+### 6. object event の書き方
+
+現時点では object は専用の物体描画まではしていませんが、移動を伴うイベントとして再生に載せられます。
+
+```json
+{ "t_start": 28, "t_end": 34, "eventType": "object", "objectType": "chair", "action": "carry" }
+```
+
+### 7. Halprin サンプルのような拡張形
+
+このプレイヤーは、以下のように `performance_json` を持つラップ形式も読めます。
+
+```json
+{
+  "interpretation_note": {
+    "summary": "..."
+  },
+  "performance_json": {
+    "meta": {
+      "title": "Interpretive version"
+    },
+    "time": {
+      "duration": 96,
+      "unit": "counts"
+    },
+    "lanes": [],
+    "score": {}
+  }
+}
+```
+
+この形にしておくと、原資料由来のメモや解釈ノートを上位に持ちながら、実際の再生用データは `performance_json` に分けて保持できます。
+
+### 8. score_ticks 形式にも対応
+
+以下のように `time.duration` の代わりに `time.ticks` を持つ形式も受け付けます。
+
+```json
+{
+  "time": {
+    "unit": "score_ticks",
+    "ticks": [0, 5, 10, 15, 20]
+  }
+}
+```
+
+この場合は最初の tick から最後の tick までを全体長として扱います。
+
+### 9. 作るときのコツ
+
+- まずは `movement` だけで全体の流れを作る
+- そのあと必要な箇所に `speech` を足す
+- `object` や `quality` は補助情報として少しずつ追加する
+- 不確かな箇所は `description` や `note` に判断理由を書いておく
+- 元資料の転写と再生用データを分けたい場合は `performance_json` を使う
+
 ## 補足
 
 - p5.js は CDN 読み込みです
