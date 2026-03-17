@@ -108,17 +108,16 @@ class Dancer {
     const state = this.motionState;
     const scaleX = this.direction * state.scaleX;
     const bodyHeight = 82 * state.bodyHeightScale;
-    const torsoTopY = this.baseY - 115 + state.bounce - state.jumpLift + state.hipDrop * -0.25;
-    const hipY = torsoTopY + bodyHeight;
-    const shoulderY = torsoTopY + 18;
-    const headY = torsoTopY - 22;
+    const hipY = this.baseY - 34 + state.bounce - state.jumpLift + state.hipDrop * 0.2;
+    const torsoTopOffset = -bodyHeight;
+    const shoulderOffset = torsoTopOffset + 18;
+    const headOffset = torsoTopOffset - 22;
     const armLength = 34;
     const legLength = 42;
 
     p.push();
-    p.translate(this.x, 0);
+    p.translate(this.x, hipY);
     p.scale(scaleX, 1);
-    p.translate(0, this.baseY - hipY);
     p.rotate(state.bodyRotation);
 
     p.stroke(this.colors.body);
@@ -127,15 +126,15 @@ class Dancer {
 
     p.fill("#ffffff");
     p.stroke(this.colors.body);
-    p.circle(0, headY - hipY, 26);
+    p.circle(0, headOffset, 26);
 
-    p.line(0, torsoTopY - hipY, 0, bodyHeight);
+    p.line(0, torsoTopOffset, 0, 0);
 
-    drawLimb(p, 0, shoulderY - hipY, armLength, -0.8 + state.armSwing, this.colors.accent);
-    drawLimb(p, 0, shoulderY - hipY, armLength, 0.8 - state.armSwing, this.colors.accent);
+    drawLimb(p, 0, shoulderOffset, armLength, -0.8 + state.armSwing, this.colors.accent);
+    drawLimb(p, 0, shoulderOffset, armLength, 0.8 - state.armSwing, this.colors.accent);
 
-    drawLeg(p, 0, bodyHeight, legLength, -0.25 + state.legSwing, state.kneeBend, this.colors.body);
-    drawLeg(p, 0, bodyHeight, legLength, 0.25 - state.legSwing, state.kneeBend, this.colors.body);
+    drawLeg(p, 0, 0, legLength, -0.25 + state.legSwing, state.kneeBend, this.colors.body);
+    drawLeg(p, 0, 0, legLength, 0.25 - state.legSwing, state.kneeBend, this.colors.body);
     p.pop();
 
     p.push();
