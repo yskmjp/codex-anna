@@ -1,3 +1,4 @@
+(function () {
 const PALETTE = [
   { body: "#1c6dd0", accent: "#8ec5ff" },
   { body: "#d97706", accent: "#fdba74" },
@@ -6,7 +7,7 @@ const PALETTE = [
   { body: "#7c3aed", accent: "#c4b5fd" },
 ];
 
-export class Dancer {
+class Dancer {
   constructor({ id, label, lane, initialX, baseY, colorIndex }) {
     this.id = id;
     this.label = label;
@@ -184,3 +185,7 @@ function createDefaultMotionState() {
     scaleX: 1,
   };
 }
+
+window.DanceScoreApp = window.DanceScoreApp || {};
+window.DanceScoreApp.Dancer = Dancer;
+})();

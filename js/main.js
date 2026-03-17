@@ -1,9 +1,7 @@
-import { ScorePlayer } from "./player.js";
-import { parseScore } from "./score.js";
-
 const STAGE_WIDTH = 1000;
 const STAGE_HEIGHT = 600;
 const FLOOR_Y = 500;
+const { ScorePlayer, parseScore } = window.DanceScoreApp;
 
 const ui = {
   playButton: document.getElementById("playButton"),

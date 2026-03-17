@@ -1,6 +1,7 @@
+(function () {
 const SUPPORTED_MOVEMENT_TYPES = new Set(["idle", "walk", "jump", "turn", "sit", "fall"]);
 
-export function parseScore(rawData) {
+function parseScore(rawData) {
   if (!rawData || typeof rawData !== "object") {
     throw new Error("JSON root must be an object.");
   }
@@ -49,7 +50,7 @@ export function parseScore(rawData) {
   };
 }
 
-export function getActiveMovementEvent(lane, currentTime) {
+function getActiveMovementEvent(lane, currentTime) {
   if (!lane?.events?.length) {
     return createIdleEvent(currentTime);
   }
@@ -58,7 +59,7 @@ export function getActiveMovementEvent(lane, currentTime) {
   return activeEvent || createIdleEvent(currentTime);
 }
 
-export function getTimelineProgress(currentTime, duration) {
+function getTimelineProgress(currentTime, duration) {
   if (!duration || duration <= 0) {
     return 0;
   }
@@ -109,3 +110,9 @@ function createIdleEvent(time) {
     eventType: "movement",
   };
 }
+
+window.DanceScoreApp = window.DanceScoreApp || {};
+window.DanceScoreApp.parseScore = parseScore;
+window.DanceScoreApp.getActiveMovementEvent = getActiveMovementEvent;
+window.DanceScoreApp.getTimelineProgress = getTimelineProgress;
+})();

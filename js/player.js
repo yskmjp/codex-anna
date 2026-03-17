@@ -1,7 +1,7 @@
-import { getActiveMovementEvent, getTimelineProgress } from "./score.js";
-import { Dancer } from "./dancer.js";
+(function () {
+const { getActiveMovementEvent, getTimelineProgress, Dancer } = window.DanceScoreApp;
 
-export class ScorePlayer {
+class ScorePlayer {
   constructor(scoreData, options = {}) {
     this.stageWidth = options.stageWidth ?? 1000;
     this.stageHeight = options.stageHeight ?? 600;
@@ -149,3 +149,7 @@ export class ScorePlayer {
     return "Paused";
   }
 }
+
+window.DanceScoreApp = window.DanceScoreApp || {};
+window.DanceScoreApp.ScorePlayer = ScorePlayer;
+})();
