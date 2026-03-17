@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dance Score Player</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">Dance Score Visualizer</p>
+        <h1>Score Player</h1>
+      </div>
+      <div class="score-meta">
+        <span id="scoreTitle">Loading sample score...</span>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <section class="stage-panel">
+        <div id="canvas-container" class="canvas-container"></div>
+      </section>
+
+      <section class="control-panel">
+        <div class="button-row">
+          <button id="playButton" type="button">Play</button>
+          <button id="pauseButton" type="button">Pause</button>
+          <button id="stopButton" type="button">Stop</button>
+          <button id="resetButton" type="button">Reset</button>
+          <label class="file-input-label" for="jsonFileInput">JSONファイル選択</label>
+          <input id="jsonFileInput" type="file" accept=".json,application/json">
+        </div>
+
+        <div class="timeline-meta">
+          <span>Current: <strong id="currentTime">0.00s</strong></span>
+          <span>Total: <strong id="totalTime">0.00s</strong></span>
+          <span>Status: <strong id="playbackStatus">Stopped</strong></span>
+        </div>
+
+        <div class="timeline-wrapper">
+          <div class="timeline-track">
+            <div id="timelineProgress" class="timeline-progress"></div>
+            <div id="timelineCursor" class="timeline-cursor"></div>
+          </div>
+        </div>
+
+        <p class="helper-text">
+          サンプルJSONは最初から読み込まれています。独自のJSONを読み込む場合はファイル選択を使ってください。
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.3/lib/p5.min.js"></script>
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>

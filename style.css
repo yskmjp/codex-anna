@@ -1,0 +1,209 @@
+:root {
+  color-scheme: light;
+  --bg: #f5f7fb;
+  --panel: #ffffff;
+  --panel-soft: #eef3fb;
+  --line: #ccd5e3;
+  --text: #1f2a37;
+  --muted: #607089;
+  --accent: #1c6dd0;
+  --accent-soft: #dbeafe;
+  --danger: #c94f4f;
+  --shadow: 0 18px 45px rgba(31, 42, 55, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", "Hiragino Sans", "Yu Gothic UI", sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(28, 109, 208, 0.08), transparent 28%),
+    linear-gradient(180deg, #f8fbff 0%, var(--bg) 55%, #edf2f8 100%);
+  color: var(--text);
+}
+
+.app-shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.app-header,
+.control-panel,
+.stage-panel {
+  background: var(--panel);
+  border: 1px solid rgba(204, 213, 227, 0.85);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  margin-bottom: 18px;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 2.2vw, 2.6rem);
+}
+
+.score-meta {
+  padding: 12px 16px;
+  background: var(--panel-soft);
+  border-radius: 14px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.app-main {
+  display: grid;
+  gap: 18px;
+}
+
+.stage-panel {
+  padding: 18px;
+}
+
+.canvas-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.canvas-container canvas {
+  display: block;
+  max-width: 100%;
+  border-radius: 14px;
+}
+
+.control-panel {
+  padding: 18px;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+button,
+.file-input-label {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--text);
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+button:hover,
+.file-input-label:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+#playButton {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+#stopButton {
+  border-color: rgba(201, 79, 79, 0.35);
+  color: var(--danger);
+}
+
+#jsonFileInput {
+  display: none;
+}
+
+.timeline-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 18px;
+  color: var(--muted);
+}
+
+.timeline-wrapper {
+  margin-top: 14px;
+}
+
+.timeline-track {
+  position: relative;
+  width: 100%;
+  height: 18px;
+  border-radius: 999px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(28, 109, 208, 0.07) 0,
+      rgba(28, 109, 208, 0.07) 24px,
+      rgba(255, 255, 255, 0.9) 24px,
+      rgba(255, 255, 255, 0.9) 48px
+    );
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.timeline-progress {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0%;
+  background: linear-gradient(90deg, #9ec5fe 0%, var(--accent) 100%);
+}
+
+.timeline-cursor {
+  position: absolute;
+  top: -4px;
+  left: 0%;
+  width: 3px;
+  height: 24px;
+  background: #163d72;
+  border-radius: 999px;
+  box-shadow: 0 0 0 3px rgba(22, 61, 114, 0.12);
+  transform: translateX(-50%);
+}
+
+.helper-text {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+@media (max-width: 860px) {
+  .app-shell {
+    padding: 14px;
+  }
+
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .stage-panel,
+  .control-panel {
+    padding: 14px;
+  }
+}
