@@ -30,12 +30,12 @@ class Dancer {
     this.motionState = createDefaultMotionState();
   }
 
-  updateFromEvent(event, currentTime) {
+  updateFromEvent(event, currentTime, speechEvent = null) {
     const progress = getEventProgress(event, currentTime);
     const duration = Math.max(event.t_end - event.t_start, 0.0001);
 
     this.motionState = createDefaultMotionState();
-    this.motionState.speechText = resolveSpeechText(event, currentTime);
+    this.motionState.speechText = resolveSpeechText(speechEvent, currentTime);
     this.motionState.annotation = event.description || "";
     this.motionState.depth = resolveDepth(event, progress, currentTime);
     this.x = Number.isFinite(event.anchorX) ? event.anchorX : this.x;

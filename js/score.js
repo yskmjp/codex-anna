@@ -63,12 +63,11 @@ function parseScore(rawData) {
 }
 
 function getActiveMovementEvent(lane, currentTime) {
-  if (!lane?.events?.length) {
-    return createIdleEvent(currentTime);
-  }
+  return getActiveEventByType(lane, currentTime, "movement") || createIdleEvent(currentTime);
+}
 
-  const activeEvent = lane.events.find((event) => currentTime >= event.t_start && currentTime < event.t_end);
-  return activeEvent || createIdleEvent(currentTime);
+function getActiveSpeechEvent(lane, currentTime) {
+  return getActiveEventByType(lane, currentTime, "speech");
 }
 
 function getTimelineProgress(currentTime, duration) {
@@ -197,6 +196,10 @@ function normalizeMovementType(sourceType, event) {
     return "walk";
   }
 
+  if (sourceType === "stand") {
+    return "idle";
+  }
+
   if (text.includes("fall")) {
     return "fall";
   }
@@ -285,8 +288,21 @@ function getEventDescription(event) {
   return "";
 }
 
+function getActiveEventByType(lane, currentTime, eventType) {
+  if (!lane?.events?.length) {
+    return null;
+  }
+
+  return lane.events.find((event) => (
+    event.eventType === eventType
+    && currentTime >= event.t_start
+    && currentTime < event.t_end
+  )) || null;
+}
+
 window.DanceScoreApp = window.DanceScoreApp || {};
 window.DanceScoreApp.parseScore = parseScore;
 window.DanceScoreApp.getActiveMovementEvent = getActiveMovementEvent;
+window.DanceScoreApp.getActiveSpeechEvent = getActiveSpeechEvent;
 window.DanceScoreApp.getTimelineProgress = getTimelineProgress;
 })();

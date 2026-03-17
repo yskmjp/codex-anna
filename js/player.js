@@ -1,5 +1,5 @@
 (function () {
-const { getActiveMovementEvent, getTimelineProgress, Dancer } = window.DanceScoreApp;
+const { getActiveMovementEvent, getActiveSpeechEvent, getTimelineProgress, Dancer } = window.DanceScoreApp;
 
 class ScorePlayer {
   constructor(scoreData, options = {}) {
@@ -178,8 +178,9 @@ class ScorePlayer {
 
   updateDancersForCurrentTime() {
     this.dancers.forEach((dancer) => {
-      const activeEvent = getActiveMovementEvent(dancer.lane, this.currentTime);
-      dancer.updateFromEvent(activeEvent, this.currentTime);
+      const activeMovementEvent = getActiveMovementEvent(dancer.lane, this.currentTime);
+      const activeSpeechEvent = getActiveSpeechEvent(dancer.lane, this.currentTime);
+      dancer.updateFromEvent(activeMovementEvent, this.currentTime, activeSpeechEvent);
     });
     this.resolveDancerOverlap();
   }
