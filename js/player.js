@@ -87,7 +87,9 @@ class ScorePlayer {
 
   draw(p) {
     this.drawStage(p);
-    this.dancers.forEach((dancer) => dancer.draw(p));
+    [...this.dancers]
+      .sort((left, right) => left.motionState.depth - right.motionState.depth)
+      .forEach((dancer) => dancer.draw(p));
   }
 
   drawStage(p) {
@@ -183,52 +185,27 @@ class ScorePlayer {
   }
 
   resolveDancerOverlap() {
-    const sorted = [...this.dancers]
-      .sort((left, right) => left.initialX - right.initialX)
-      .map((dancer) => ({
-        dancer,
-        x: dancer.x,
-      }));
-    const minGap = 70;
-    const depthThreshold = 0.18;
+    const minGap = 82;
+    const depthThreshold = 0.22;
 
-    for (let index = 1; index < sorted.length; index += 1) {
-      const previous = sorted[index - 1];
-      const current = sorted[index];
-      const depthDifference = Math.abs(previous.dancer.motionState.depth - current.dancer.motionState.depth);
-      const gap = current.x - previous.x;
+    for (let leftIndex = 0; leftIndex < this.dancers.length - 1; leftIndex += 1) {
+      for (let rightIndex = leftIndex + 1; rightIndex < this.dancers.length; rightIndex += 1) {
+        const left = this.dancers[leftIndex];
+        const right = this.dancers[rightIndex];
+        const gap = Math.abs(right.x - left.x);
+        const depthDifference = Math.abs(left.motionState.depth - right.motionState.depth);
 
-      if (depthDifference >= depthThreshold || gap >= minGap) {
-        continue;
-      }
+        if (gap >= minGap || depthDifference >= depthThreshold) {
+          continue;
+        }
 
-      const correction = (minGap - gap) / 2;
-      previous.x = Math.max(previous.dancer.minX, previous.x - correction);
-      current.x = Math.min(current.dancer.maxX, current.x + correction);
-    }
+        const closeness = 1 - gap / minGap;
+        const dodgeAmount = closeness * 0.16;
+        const leftBias = leftIndex % 2 === 0 ? -1 : 1;
+        const rightBias = -leftBias;
 
-    for (let index = 1; index < sorted.length; index += 1) {
-      const previous = sorted[index - 1];
-      const current = sorted[index];
-      current.x = Math.max(current.x, previous.x + 12);
-    }
-
-    for (let index = sorted.length - 2; index >= 0; index -= 1) {
-      const current = sorted[index];
-      const next = sorted[index + 1];
-      current.x = Math.min(current.x, next.x - 12);
-    }
-
-    sorted.forEach((entry) => {
-      entry.dancer.x = Math.min(Math.max(entry.x, entry.dancer.minX), entry.dancer.maxX);
-    });
-
-    for (let index = 1; index < sorted.length; index += 1) {
-      const previous = sorted[index - 1].dancer;
-      const current = sorted[index].dancer;
-
-      if (current.x <= previous.x) {
-        current.x = Math.min(current.maxX, previous.x + 12);
+        left.motionState.depth = clampDepth(left.motionState.depth + dodgeAmount * leftBias);
+        right.motionState.depth = clampDepth(right.motionState.depth + dodgeAmount * rightBias);
       }
     }
   }
@@ -269,4 +246,8 @@ class ScorePlayer {
 
 window.DanceScoreApp = window.DanceScoreApp || {};
 window.DanceScoreApp.ScorePlayer = ScorePlayer;
+
+function clampDepth(depth) {
+  return Math.min(Math.max(depth, 0.2), 0.92);
+}
 })();
