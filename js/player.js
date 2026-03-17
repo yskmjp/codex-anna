@@ -25,6 +25,8 @@ class ScorePlayer {
 
   createDancers(lanes) {
     const spacing = this.stageWidth / (lanes.length + 1);
+    const minX = 72;
+    const maxX = this.stageWidth - 72;
 
     return lanes.map((lane, index) => {
       const startX = Number.isFinite(lane.startX) ? lane.startX : spacing * (index + 1);
@@ -35,6 +37,8 @@ class ScorePlayer {
         initialX: startX,
         baseY: this.floorY,
         colorIndex: index,
+        minX,
+        maxX,
       });
     });
   }
@@ -87,27 +91,11 @@ class ScorePlayer {
   }
 
   drawStage(p) {
-    const outerX = 24;
-    const outerY = 24;
-    const outerW = this.stageWidth - 48;
-    const outerH = this.stageHeight - 48;
-    const wingWidth = 120;
-    const stageX = outerX + wingWidth;
-    const stageW = outerW - wingWidth * 2;
-
     p.push();
     p.noStroke();
     p.background(248, 251, 255);
-
     p.fill(234, 241, 250);
-    p.rect(outerX, outerY, outerW, outerH, 24);
-
-    p.fill(222, 229, 240);
-    p.rect(outerX + 18, outerY + 18, wingWidth - 18, outerH - 36, 20, 0, 0, 20);
-    p.rect(stageX + stageW, outerY + 18, wingWidth - 18, outerH - 36, 0, 20, 20, 0);
-
-    p.fill(206, 218, 235);
-    p.rect(stageX, outerY + 18, stageW, outerH - 36, 20);
+    p.rect(24, 24, this.stageWidth - 48, this.stageHeight - 48, 24);
 
     p.fill(198, 210, 228);
     p.rect(48, this.floorY + 10, this.stageWidth - 96, 46, 18);
@@ -115,11 +103,6 @@ class ScorePlayer {
     p.stroke(133, 153, 180);
     p.strokeWeight(2);
     p.line(48, this.floorY, this.stageWidth - 48, this.floorY);
-
-    p.stroke(167, 181, 201);
-    p.strokeWeight(1);
-    p.line(stageX, outerY + 32, stageX, this.floorY + 56);
-    p.line(stageX + stageW, outerY + 32, stageX + stageW, this.floorY + 56);
 
     p.noStroke();
     p.fill(90, 108, 132);
@@ -138,13 +121,6 @@ class ScorePlayer {
       p.text(`Sample note: JSONized interpretation of Anna Halprin's score "The Five Legged Stool".`, 48, 124);
       p.text(`Source: ${this.scoreData.meta.source_label}`, 48, 142);
     }
-
-    p.fill(96, 109, 129);
-    p.textAlign(p.CENTER, p.CENTER);
-    p.textSize(12);
-    p.text("WING", outerX + wingWidth / 2 + 6, this.floorY + 30);
-    p.text("STAGE", stageX + stageW / 2, this.floorY + 30);
-    p.text("WING", stageX + stageW + wingWidth / 2 - 6, this.floorY + 30);
     p.pop();
   }
 

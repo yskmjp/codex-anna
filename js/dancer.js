@@ -8,12 +8,14 @@ const PALETTE = [
 ];
 
 class Dancer {
-  constructor({ id, label, lane, initialX, baseY, colorIndex }) {
+  constructor({ id, label, lane, initialX, baseY, colorIndex, minX, maxX }) {
     this.id = id;
     this.label = label;
     this.lane = lane;
     this.initialX = initialX;
     this.baseY = baseY;
+    this.minX = minX;
+    this.maxX = maxX;
     this.x = initialX;
     this.direction = 1;
     this.motionState = createDefaultMotionState();
@@ -67,7 +69,7 @@ class Dancer {
     const dir = event.direction === "left" ? -1 : 1;
     const distance = Math.max(45, duration * 22);
     this.direction = dir;
-    this.x = this.initialX + dir * distance * progress;
+    this.x = clamp(this.initialX + dir * distance * progress, this.minX, this.maxX);
     this.motionState.bounce = Math.abs(Math.sin(progress * Math.PI * 4)) * -7;
     this.motionState.armSwing = Math.sin(progress * Math.PI * 6) * 0.85;
     this.motionState.legSwing = Math.sin(progress * Math.PI * 6 + Math.PI) * 0.95;
@@ -228,6 +230,10 @@ function drawSpeechBubble(p, x, y, text, strokeColor) {
   p.fill(31, 42, 55);
   p.text(text, x, y);
   p.pop();
+}
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
 }
 
 window.DanceScoreApp = window.DanceScoreApp || {};
