@@ -27,14 +27,14 @@ const sampleCatalog = [
   {
     id: "depth",
     label: "The Five Legged Stool",
-    path: "./data/sample-score.json",
     embeddedId: "embeddedSampleScore",
+    path: "./data/sample-score.json",
   },
   {
     id: "anton",
     label: "アントン、猫、クリ",
-    path: "./data/test-patterns/anton-neko-kuri-opening.json",
     embeddedId: "embeddedAntonScore",
+    path: "./data/test-patterns/anton-neko-kuri-opening.json",
   },
 ];
 
@@ -45,9 +45,10 @@ initialize().catch((error) => {
 
 async function initialize() {
   bindUIEvents();
-
   populateSampleOptions();
-  const rawScore = await loadSampleById(ui.sampleSelect.value || sampleCatalog[0].id);
+
+  const defaultSampleId = ui.sampleSelect.value || sampleCatalog[0].id;
+  const rawScore = await loadSampleById(defaultSampleId);
   syncEditorWithScore(rawScore);
   loadScoreIntoPlayer(rawScore);
   createSketch();
@@ -80,6 +81,7 @@ async function handleSampleChange() {
     loadScoreIntoPlayer(rawScore);
   } catch (error) {
     console.error("Failed to switch sample:", error);
+    ui.scoreTitle.textContent = "Failed to switch sample";
     alert("Failed to load the selected sample.");
   }
 }
@@ -108,28 +110,26 @@ async function loadSampleById(sampleId) {
   }
 
   const sample = sampleCatalog.find((entry) => entry.id === sampleId) || sampleCatalog[0];
+  const embeddedSample = document.getElementById(sample.embeddedId);
 
-  try {
-    const response = await fetch(sample.path);
-    if (!response.ok) {
-      throw new Error(`Could not load sample score: ${response.status}`);
-    }
-
-    const rawScore = await response.json();
-    bundledSamples.set(sample.id, rawScore);
-    return rawScore;
-  } catch (error) {
-    console.warn("Falling back to embedded sample score:", error);
-    const embeddedSample = document.getElementById(sample.embeddedId);
-
-    if (!embeddedSample?.textContent) {
-      throw error;
-    }
-
+  if (embeddedSample?.textContent) {
     const rawScore = JSON.parse(embeddedSample.textContent);
     bundledSamples.set(sample.id, rawScore);
     return rawScore;
   }
+
+  if (!sample.path) {
+    throw new Error(`No sample source found for "${sample.id}".`);
+  }
+
+  const response = await fetch(sample.path, { cache: "no-store" });
+  if (!response.ok) {
+    throw new Error(`Could not load sample score: ${response.status}`);
+  }
+
+  const rawScore = await response.json();
+  bundledSamples.set(sample.id, rawScore);
+  return rawScore;
 }
 
 function loadScoreIntoPlayer(rawScore) {
