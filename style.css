@@ -124,8 +124,7 @@ h1 {
   align-items: center;
 }
 
-button,
-.json-editor-label {
+button {
   border: 1px solid var(--line);
   border-radius: 999px;
   background: #fff;
@@ -138,7 +137,7 @@ button,
 }
 
 button:hover,
-.json-editor-label:hover {
+button:hover {
   transform: translateY(-1px);
   border-color: var(--accent);
   background: var(--accent-soft);
@@ -160,11 +159,16 @@ button:hover,
 }
 
 .json-editor-label {
-  display: inline-flex;
-  align-items: center;
+  display: block;
   margin-bottom: 10px;
-  cursor: default;
-  transform: none;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .json-editor {
