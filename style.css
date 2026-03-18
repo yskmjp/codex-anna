@@ -173,7 +173,7 @@ button:hover {
 
 .json-editor {
   width: 100%;
-  min-height: 220px;
+  min-height: 440px;
   resize: vertical;
   padding: 16px;
   border: 1px solid var(--line);
