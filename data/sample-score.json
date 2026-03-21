@@ -21,67 +21,304 @@
       "unit": "counts"
     },
     "lanes": [
-      { "id": "woman", "label": "WOMAN", "startX": 320 },
-      { "id": "man1", "label": "MAN 1", "startX": 430 },
-      { "id": "man2", "label": "MAN 2", "startX": 540 },
-      { "id": "young_girl", "label": "YOUNG GIRL", "startX": 650 },
-      { "id": "stage_hand", "label": "STAGE HAND", "startX": 760 }
+      {
+        "id": "woman",
+        "label": "WOMAN",
+        "startX": 320
+      },
+      {
+        "id": "man1",
+        "label": "MAN 1",
+        "startX": 430
+      },
+      {
+        "id": "man2",
+        "label": "MAN 2",
+        "startX": 540
+      },
+      {
+        "id": "young_girl",
+        "label": "YOUNG GIRL",
+        "startX": 650
+      },
+      {
+        "id": "stage_hand",
+        "label": "STAGE HAND",
+        "startX": 760
+      }
     ],
     "score": {
       "woman": {
         "events": [
-          { "t_start": 0, "t_end": 12, "eventType": "movement", "type": "walk", "direction": "right", "quality": "hesitant" },
-          { "t_start": 12, "t_end": 20, "eventType": "movement", "type": "idle", "quality": "suspended" },
-          { "t_start": 20, "t_end": 28, "eventType": "movement", "type": "walk", "direction": "left", "quality": "agitated" },
-          { "t_start": 28, "t_end": 35, "eventType": "movement", "type": "turn", "quality": "abrupt" },
-          { "t_start": 35, "t_end": 44, "eventType": "movement", "type": "jump", "quality": "sharp" },
-          { "t_start": 44, "t_end": 55, "eventType": "movement", "type": "idle", "quality": "breathing" },
-          { "t_start": 55, "t_end": 60, "eventType": "movement", "type": "walk", "direction": "right", "quality": "approaching" },
-          { "t_start": 60, "t_end": 64, "eventType": "speech", "text": "CHOP" },
-          { "t_start": 64, "t_end": 68, "eventType": "speech", "text": "WHEE" },
-          { "t_start": 68, "t_end": 72, "eventType": "speech", "text": "WE'RE ..." },
-          { "t_start": 72, "t_end": 76, "eventType": "speech", "text": "PLEASE" },
-          { "t_start": 76, "t_end": 80, "eventType": "speech", "text": "HELP" },
-          { "t_start": 80, "t_end": 84, "eventType": "movement", "type": "fall", "quality": "released" },
-          { "t_start": 84, "t_end": 96, "eventType": "movement", "type": "walk", "direction": "right", "quality": "receding" }
+          {
+            "t_start": 0,
+            "t_end": 12,
+            "eventType": "movement",
+            "type": "walk",
+            "direction": "right",
+            "quality": "hesitant"
+          },
+          {
+            "t_start": 12,
+            "t_end": 20,
+            "eventType": "movement",
+            "type": "idle",
+            "quality": "suspended"
+          },
+          {
+            "t_start": 20,
+            "t_end": 28,
+            "eventType": "movement",
+            "type": "walk",
+            "direction": "left",
+            "quality": "agitated"
+          },
+          {
+            "t_start": 28,
+            "t_end": 35,
+            "eventType": "movement",
+            "type": "turn",
+            "quality": "abrupt"
+          },
+          {
+            "t_start": 35,
+            "t_end": 44,
+            "eventType": "movement",
+            "type": "jump",
+            "quality": "sharp"
+          },
+          {
+            "t_start": 44,
+            "t_end": 55,
+            "eventType": "movement",
+            "type": "idle",
+            "quality": "breathing"
+          },
+          {
+            "t_start": 55,
+            "t_end": 60,
+            "eventType": "movement",
+            "type": "walk",
+            "direction": "right",
+            "quality": "approaching"
+          },
+          {
+            "t_start": 60,
+            "t_end": 64,
+            "eventType": "speech",
+            "text": "CHOP"
+          },
+          {
+            "t_start": 64,
+            "t_end": 68,
+            "eventType": "speech",
+            "text": "WHEE"
+          },
+          {
+            "t_start": 68,
+            "t_end": 72,
+            "eventType": "speech",
+            "text": "WE'RE ..."
+          },
+          {
+            "t_start": 72,
+            "t_end": 76,
+            "eventType": "speech",
+            "text": "PLEASE"
+          },
+          {
+            "t_start": 76,
+            "t_end": 80,
+            "eventType": "speech",
+            "text": "HELP"
+          },
+          {
+            "t_start": 80,
+            "t_end": 84,
+            "eventType": "movement",
+            "type": "fall",
+            "quality": "released"
+          },
+          {
+            "t_start": 84,
+            "t_end": 96,
+            "eventType": "movement",
+            "type": "walk",
+            "direction": "right",
+            "quality": "receding"
+          }
         ]
       },
       "man1": {
         "events": [
-          { "t_start": 0, "t_end": 16, "eventType": "movement", "type": "idle", "quality": "watching" },
-          { "t_start": 16, "t_end": 28, "eventType": "movement", "type": "walk", "direction": "right", "quality": "task-like" },
-          { "t_start": 28, "t_end": 34, "eventType": "movement", "type": "turn", "quality": "functional" },
-          { "t_start": 34, "t_end": 50, "eventType": "movement", "type": "sit", "quality": "neutral" },
-          { "t_start": 50, "t_end": 62, "eventType": "movement", "type": "idle", "quality": "waiting" },
-          { "t_start": 62, "t_end": 72, "eventType": "movement", "type": "walk", "direction": "left", "quality": "measured" },
-          { "t_start": 72, "t_end": 84, "eventType": "movement", "type": "turn", "quality": "reactive" },
-          { "t_start": 84, "t_end": 96, "eventType": "movement", "type": "walk", "direction": "left", "quality": "receding" }
+          {
+            "t_start": 0,
+            "t_end": 16,
+            "eventType": "movement",
+            "type": "idle",
+            "quality": "watching"
+          },
+          {
+            "t_start": 16,
+            "t_end": 28,
+            "eventType": "movement",
+            "type": "walk",
+            "direction": "right",
+            "quality": "task-like"
+          },
+          {
+            "t_start": 28,
+            "t_end": 34,
+            "eventType": "movement",
+            "type": "turn",
+            "quality": "functional"
+          },
+          {
+            "t_start": 34,
+            "t_end": 50,
+            "eventType": "movement",
+            "type": "sit",
+            "quality": "neutral"
+          },
+          {
+            "t_start": 50,
+            "t_end": 62,
+            "eventType": "movement",
+            "type": "idle",
+            "quality": "waiting"
+          },
+          {
+            "t_start": 62,
+            "t_end": 72,
+            "eventType": "movement",
+            "type": "walk",
+            "direction": "left",
+            "quality": "measured"
+          },
+          {
+            "t_start": 72,
+            "t_end": 84,
+            "eventType": "movement",
+            "type": "turn",
+            "quality": "reactive"
+          },
+          {
+            "t_start": 84,
+            "t_end": 96,
+            "eventType": "movement",
+            "type": "walk",
+            "direction": "left",
+            "quality": "receding"
+          }
         ]
       },
       "man2": {
         "events": [
-          { "t_start": 0, "t_end": 10, "eventType": "movement", "type": "walk", "direction": "left", "quality": "casual" },
-          { "t_start": 10, "t_end": 22, "eventType": "movement", "type": "idle", "quality": "present" },
-          { "t_start": 22, "t_end": 30, "eventType": "movement", "type": "turn", "quality": "observing" },
-          { "t_start": 30, "t_end": 45, "eventType": "movement", "type": "walk", "direction": "right", "quality": "intervening" },
-          { "t_start": 45, "t_end": 56, "eventType": "movement", "type": "idle", "quality": "suspended" },
-          { "t_start": 56, "t_end": 66, "eventType": "movement", "type": "sit", "quality": "temporary" },
-          { "t_start": 66, "t_end": 82, "eventType": "movement", "type": "walk", "direction": "left", "quality": "withdrawn" },
-          { "t_start": 82, "t_end": 96, "eventType": "movement", "type": "walk", "direction": "left", "quality": "receding" }
+          {
+            "t_start": 0,
+            "t_end": 10,
+            "eventType": "movement",
+            "type": "walk",
+            "direction": "left",
+            "quality": "casual"
+          },
+          {
+            "t_start": 10,
+            "t_end": 22,
+            "eventType": "movement",
+            "type": "idle",
+            "quality": "present"
+          },
+          {
+            "t_start": 22,
+            "t_end": 30,
+            "eventType": "movement",
+            "type": "turn",
+            "quality": "observing"
+          },
+          {
+            "t_start": 30,
+            "t_end": 45,
+            "eventType": "movement",
+            "type": "walk",
+            "direction": "right",
+            "quality": "intervening"
+          },
+          {
+            "t_start": 45,
+            "t_end": 56,
+            "eventType": "movement",
+            "type": "idle",
+            "quality": "suspended"
+          },
+          {
+            "t_start": 56,
+            "t_end": 66,
+            "eventType": "movement",
+            "type": "sit",
+            "quality": "temporary"
+          },
+          {
+            "t_start": 66,
+            "t_end": 82,
+            "eventType": "movement",
+            "type": "walk",
+            "direction": "left",
+            "quality": "withdrawn"
+          },
+          {
+            "t_start": 82,
+            "t_end": 96,
+            "eventType": "movement",
+            "type": "walk",
+            "direction": "left",
+            "quality": "receding"
+          }
         ]
       },
       "young_girl": {
         "events": [
-          { "t_start": 0, "t_end": 96, "eventType": "movement", "type": "walk", "direction": "right", "quality": "floating" }
+          {
+            "t_start": 0,
+            "t_end": 96,
+            "eventType": "movement",
+            "type": "walk",
+            "direction": "right",
+            "quality": "floating"
+          }
         ]
       },
       "stage_hand": {
         "events": [
-          { "t_start": 18, "t_end": 32, "eventType": "movement", "type": "walk", "direction": "left", "quality": "functional" },
-          { "t_start": 52, "t_end": 68, "eventType": "movement", "type": "walk", "direction": "right", "quality": "functional" },
-          { "t_start": 68, "t_end": 80, "eventType": "movement", "type": "walk", "direction": "left", "quality": "receding" }
+          {
+            "t_start": 18,
+            "t_end": 32,
+            "eventType": "movement",
+            "type": "walk",
+            "direction": "left",
+            "quality": "functional"
+          },
+          {
+            "t_start": 52,
+            "t_end": 68,
+            "eventType": "movement",
+            "type": "walk",
+            "direction": "right",
+            "quality": "functional"
+          },
+          {
+            "t_start": 68,
+            "t_end": 80,
+            "eventType": "movement",
+            "type": "walk",
+            "direction": "left",
+            "quality": "receding"
+          }
         ]
       }
     }
-  }
+  },
+  "source_label": "Anna Halprin Digital Archive / The Five Legged Stool",
+  "source_note": "Anna Halprin のスコア「The Five Legged Stool」をもとにした解釈版サンプル。",
+  "source_url": "https://annahalprindigitalarchive.omeka.net/exhibits/show/san-francisco-dancers-workshop/item/312"
 }

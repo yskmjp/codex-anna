@@ -168,10 +168,18 @@ class ScorePlayer {
     if (this.scoreData.meta.date) {
       p.text(`Date: ${this.scoreData.meta.date}`, 48, 102);
     }
-    if (this.scoreData.meta.interpretation_choreographer || this.scoreData.meta.source_label) {
-      p.textSize(12);
-      p.text(`Sample note: JSONized interpretation of Anna Halprin's score "The Five Legged Stool".`, 48, 124);
-      p.text(`Source: ${this.scoreData.meta.source_label}`, 48, 142);
+    let noteY = 124;
+    p.textSize(12);
+    if (this.scoreData.meta.interpretation_summary) {
+      p.text(`Description: ${this.scoreData.meta.interpretation_summary}`, 48, noteY, this.stageWidth - 96, 44);
+      noteY += 40;
+    }
+    if (this.scoreData.meta.source_note) {
+      p.text(`Sample note: ${this.scoreData.meta.source_note}`, 48, noteY, this.stageWidth - 96, 30);
+      noteY += 24;
+    }
+    if (this.scoreData.meta.source_label) {
+      p.text(`Source: ${this.scoreData.meta.source_label}`, 48, noteY, this.stageWidth - 96, 24);
     }
     p.pop();
   }
