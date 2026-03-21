@@ -18,6 +18,7 @@ const ui = {
   timelineCursor: document.getElementById("timelineCursor"),
   scoreTitle: document.getElementById("scoreTitle"),
   sampleSelect: document.getElementById("sampleSelect"),
+  sampleSourceLink: document.getElementById("sampleSourceLink"),
 };
 
 let player = null;
@@ -147,6 +148,7 @@ function loadScoreIntoPlayer(rawScore) {
 
   ui.scoreTitle.textContent = parsedScore.meta.title;
   ui.totalTime.textContent = `${parsedScore.time.duration.toFixed(2)}s`;
+  updateSampleSourceLink(parsedScore.meta);
   updateUI();
 }
 
@@ -189,4 +191,20 @@ function updateUI() {
   ui.playbackStatus.textContent = player.getStatusLabel();
   ui.timelineProgress.style.width = `${progressPercent}%`;
   ui.timelineCursor.style.left = `${progressPercent}%`;
+}
+
+function updateSampleSourceLink(meta) {
+  if (!ui.sampleSourceLink) {
+    return;
+  }
+
+  if (meta.source_url) {
+    ui.sampleSourceLink.hidden = false;
+    ui.sampleSourceLink.href = meta.source_url;
+    ui.sampleSourceLink.textContent = meta.source_label || "Source";
+    return;
+  }
+
+  ui.sampleSourceLink.hidden = true;
+  ui.sampleSourceLink.removeAttribute("href");
 }
